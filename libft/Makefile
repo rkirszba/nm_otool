@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 14:42:41 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/12 17:45:04 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/12 20:13:07 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,14 @@ CFLAGS	= -Wall\
 				   -g3
 
 SRCS_DIR		= srcs/
-SRCS_NAMES		= ft_strlen.c
+SRCS_NAMES		= ft_strlen.c\
+				  ft_list_new.c\
+				  ft_list_append.c\
+				  ft_list_prepend.c\
+				  ft_list_free.c\
+				  ft_btree_new.c\
+				  ft_btree_insert.c\
+				  ft_btree_inorder.c
 
 
 INCS_DIR		= includes/
@@ -43,7 +50,7 @@ OBJS	= $(SRCS:$(SRCS_DIR)%.c=$(OBJS_DIR)%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rc $@ $<
+	ar rc $@ $^
 	ranlib $@
 	@echo "made libft"
 
