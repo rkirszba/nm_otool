@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 16:16:50 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/12 18:13:24 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/13 19:44:22 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ CFLAGS	= -Wall\
 SRCS_DIR_NM		= srcs_nm/
 SRCS_DIR_OT		= srcs_otool/
 
-SRCS_NAMES_NM	= ft_nm.c
+SRCS_NAMES_NM	= ft_nm.c\
+				  args_parser.c\
+				  errors.c
 
 SRCS_NAMES_OT	= ft_otool.c
 

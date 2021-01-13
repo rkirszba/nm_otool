@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/13 14:38:56 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/13 19:20:03 by rkirszba         ###   ########.fr       */
+/*   Created: 2021/01/13 15:16:14 by rkirszba          #+#    #+#             */
+/*   Updated: 2021/01/13 15:19:47 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	while (*s)
+	if (!s1 || !s2)
+		return (0);
+	while (*s1 && *s2)
 	{
-		if (*s == (char)c)
-			return ((char*)s);
-		s++;
+		if (*s1 != *s2)
+			return ((int)(*s1 - *s2));
+		s1++;
+		s2++;	
 	}
-	if (*s == (char)c)
-		return ((char*)s);
-	return (NULL);
+	return ((int)(*s1 - *s2));
 }
