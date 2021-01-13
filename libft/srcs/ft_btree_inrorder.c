@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_btree_inrorder.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/12 15:46:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/13 12:12:11 by rkirszba         ###   ########.fr       */
+/*   Created: 2021/01/12 19:43:18 by rkirszba          #+#    #+#             */
+/*   Updated: 2021/01/13 15:02:37 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+void	ft_btree_inrorder(t_btree *node, void (*f)(void *))
 {
-	size_t	len;
-
-	if (!s)
-		return (0);
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
+	if (!node)
+		return ;
+	ft_btree_inorder(node->right, f);
+	f(node->data);
+	ft_btree_inorder(node->left, f);
 }

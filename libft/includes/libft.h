@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 14:32:42 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/12 20:08:48 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/13 15:03:06 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ typedef struct	s_btree
 */
 
 size_t			ft_strlen(const char *s);
+char			*ft_strcpy(char *dst, const char *src);
+char			*ft_strncpy(char * dst, const char * src, size_t len);
+char			*ft_strcat(char *restrict s1, const char *restrict s2);
+char			*ft_strchr(const char *s, int c);
+
+/*
+** Memory operations
+*/
+
+void			*ft_memcpy(void *restrict dst, const void *restrict src, size_t n);
 
 /*
 ** Linked lists
@@ -54,5 +64,6 @@ void			ft_list_free(t_list *head, void (*f)(void*));
 t_btree			*ft_btree_new(void *data);
 void			ft_btree_insert(t_btree **head, t_btree *node, int (*f)(void *, void *));
 void			ft_btree_inorder(t_btree *node, void (*f)(void *));
+void			ft_btree_inrorder(t_btree *node, void (*f)(void *));
 
 #endif

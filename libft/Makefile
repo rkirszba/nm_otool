@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 14:42:41 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/12 20:13:07 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/13 15:03:47 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,19 @@ CFLAGS	= -Wall\
 
 SRCS_DIR		= srcs/
 SRCS_NAMES		= ft_strlen.c\
+				  ft_strcpy.c\
+				  ft_strncpy.c\
+				  ft_strcat.c\
+				  ft_strchr.c\
+				  ft_memcpy.c\
 				  ft_list_new.c\
 				  ft_list_append.c\
 				  ft_list_prepend.c\
 				  ft_list_free.c\
 				  ft_btree_new.c\
 				  ft_btree_insert.c\
-				  ft_btree_inorder.c
+				  ft_btree_inorder.c\
+				  ft_btree_inrorder.c
 
 
 INCS_DIR		= includes/
