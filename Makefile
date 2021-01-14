@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 16:16:50 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/14 13:28:34 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/14 19:17:36 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,9 @@ SRCS_DIR_OT		= srcs_otool/
 SRCS_NAMES_NM	= ft_nm.c\
 				  args_parser.c\
 				  files_process.c\
+				  handlers.c\
+				  security.c\
+				  symbols_get.c\
 				  errors.c
 
 SRCS_NAMES_OT	= ft_otool.c

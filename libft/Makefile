@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 14:42:41 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/14 10:35:00 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/14 18:45:53 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ SRCS_NAMES		= ft_strlen.c\
 				  ft_btree_new.c\
 				  ft_btree_insert.c\
 				  ft_btree_inorder.c\
-				  ft_btree_inrorder.c
+				  ft_btree_inrorder.c\
+				  ft_btree_free.c
 
 
 INCS_DIR		= includes/

@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 14:32:42 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/14 10:34:24 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:46:11 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ t_btree			*ft_btree_new(void *data);
 void			ft_btree_insert(t_btree **head, t_btree *node, int (*f)(void *, void *));
 void			ft_btree_inorder(t_btree *node, void (*f)(void *));
 void			ft_btree_inrorder(t_btree *node, void (*f)(void *));
+void			ft_btree_free(t_btree *node, void (*f)(void*));
 
 #endif

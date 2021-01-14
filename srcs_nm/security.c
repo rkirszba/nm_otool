@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_list_free.c                                     :+:      :+:    :+:   */
+/*   security.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/12 19:01:40 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/14 18:40:52 by rkirszba         ###   ########.fr       */
+/*   Created: 2021/01/14 17:47:38 by rkirszba          #+#    #+#             */
+/*   Updated: 2021/01/14 17:56:08 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_nm.h"
 
-void	ft_list_free(t_list *head, void (*f)(void*))
+int8_t	is_sane(int32_t size, uint32_t offset, uint32_t to_read)
 {
-	t_list	*tmp;
-
-	while (head)
-	{
-		tmp = head->next;
-		f(head->data);
-		free(head);
-		head = tmp;
-	}
+	if (size - (offset + to_read) >= 0)
+		return (TRUE);
+	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 19:29:11 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/14 13:23:05 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/14 19:10:03 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static char	*get_error(int err)
 	{
 		{ENOENT, "No such file or directory"},
 		{EACCES, "Permission denied"},
-		{EINVAL, "Invalid argument"}
+		{EINVAL, "Invalid argument"},
+		{ENOTDIR, "Not a directory"}
 	};
 	int				i;
 
@@ -49,7 +50,7 @@ static char	*get_error(int err)
 	return ("Unknown reason");
 }
 
-int8_t	print_file_error(char *file_name)
+int8_t	print_loading_file_error(char *file_name)
 {
 	int	err;
 
@@ -59,5 +60,21 @@ int8_t	print_file_error(char *file_name)
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(get_error(err), 2);
 	ft_putstr_fd(".\n", 2);
+	return (ERROR);
+}
+
+int8_t	print_invalid_file_error(char *file_name)
+{
+	ft_putstr_fd("nm: error: ", 2);
+	ft_putstr_fd(file_name, 2);
+	ft_putstr_fd(" The file was not recognized as a valid object file\n", 2);
+	return (ERROR);
+}
+
+int8_t	print_corrupted_file_error(char *file_name)
+{
+	ft_putstr_fd("nm: error: ", 2);
+	ft_putstr_fd(file_name, 2);
+	ft_putstr_fd(" truncated or malformed object\n", 2);
 	return (ERROR);
 }
