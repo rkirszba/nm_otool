@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:27:04 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/13 19:39:33 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/14 13:26:58 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,34 @@ static void		free_file_data(void *data)
 	free(data);
 }
 
-static int		process_files(t_options *options, t_list *files)
-{
-	t_file_data	*data;
+// static int		process_files(t_options *options, t_list *files)
+// {
+// 	t_file_data	*data;
 
-	ft_putstr("----- OPTIONS -----\n");
-	if (options->a == TRUE)
-		ft_putstr("a\n");
-	if (options->b == TRUE)
-		ft_putstr("b\n");
-	if (options->c == TRUE)
-		ft_putstr("c\n");
-	if (options->d == TRUE)
-		ft_putstr("d\n");
-	if (options->e == TRUE)
-		ft_putstr("e\n");
-	if (options->f == TRUE)
-		ft_putstr("f\n");
+// 	ft_putstr("----- OPTIONS -----\n");
+// 	if (options->a == TRUE)
+// 		ft_putstr("a\n");
+// 	if (options->b == TRUE)
+// 		ft_putstr("b\n");
+// 	if (options->c == TRUE)
+// 		ft_putstr("c\n");
+// 	if (options->d == TRUE)
+// 		ft_putstr("d\n");
+// 	if (options->e == TRUE)
+// 		ft_putstr("e\n");
+// 	if (options->f == TRUE)
+// 		ft_putstr("f\n");
 	
-	ft_putstr("----- FILES -----\n");
-	while (files)
-	{
-		data = (t_file_data*)(files->data);
-		ft_putstr(data->name);
-		ft_putstr("\n");
-		files = files->next;
-	}
-	return (SUCCESS);
-}
+// 	ft_putstr("----- FILES -----\n");
+// 	while (files)
+// 	{
+// 		data = (t_file_data*)(files->data);
+// 		ft_putstr(data->name);
+// 		ft_putstr("\n");
+// 		files = files->next;
+// 	}
+// 	return (SUCCESS);
+// }
 
 int				main(int ac, char **av)
 {
@@ -56,10 +56,10 @@ int				main(int ac, char **av)
 
 	ft_bzero(&options, sizeof(options));
 	if (get_options(ac, av, &options, &arg_offset) == ERROR)
-		return (ERROR);
-	if (get_files(&files, ac, av, arg_offset) == ERROR)
-		return (ERROR);
-	ret = process_files(&options, files);
+		return (EXIT_FAILURE);
+	if (get_files(&files, ac, av, arg_offset) == MALLOC_ERROR)
+		return (EXIT_FAILURE);
+	ret = files_process(&options, files);
 	ft_list_free(files, &free_file_data);
-	return (ret);
+	return ((int)ret);
 }

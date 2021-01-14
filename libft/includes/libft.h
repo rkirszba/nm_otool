@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 14:32:42 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/13 19:19:16 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/14 10:34:24 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ char			*ft_strcpy(char *dst, const char *src);
 char			*ft_strncpy(char * dst, const char * src, size_t len);
 char			*ft_strcat(char *restrict s1, const char *restrict s2);
 char			*ft_strdup(const char *s1);
+char			*ft_strjoin(const char *s1, const char *s2);
 char			*ft_strchr(const char *s, int c);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);

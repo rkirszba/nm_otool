@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:49:22 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/13 19:38:18 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/14 12:45:52 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static t_list	*create_new_file_node(char *file_name)
 		print_malloc_error();
 		return (NULL);
 	}
+	ft_bzero(data, sizeof(*data));
 	data->name = name_dup;
 	new->data = (void*)data;
 	return (new);
@@ -86,14 +87,14 @@ int8_t			get_files(t_list **list, int ac, char **av, int arg_offset)
 	while (arg_offset < ac)
 	{
 		if (!(new = create_new_file_node(av[arg_offset])))
-			return (FAILURE);
+			return (MALLOC_ERROR);
 		ft_list_append(list, new);
 		arg_offset++;
 	}
 	if (!(*list))
 	{
 		if (!(new = create_new_file_node(DEFAULT_FILE)))
-			return (FAILURE);
+			return (MALLOC_ERROR);
 		ft_list_append(list, new);
 	}
 	return (SUCCESS);
