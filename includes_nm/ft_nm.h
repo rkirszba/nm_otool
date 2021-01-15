@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/14 19:15:04 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/15 20:03:33 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,59 @@
 
 # define DEFAULT_FILE		"a.out"
 
-# define OPTIONS			"abcdef"
+# define OPTIONS			"agjnopruPU"
 
 # define NB_FORMATS			4
+
+typedef enum	e_arch
+{
+	x32,
+	x64
+}				t_arch;
+
+typedef enum	e_section
+{
+	none,
+	test,
+	data,
+	bss,
+	other
+}				t_section;
 
 typedef struct	s_options
 {
 	u_int8_t	a;
-	u_int8_t	b;
-	u_int8_t	c;
-	u_int8_t	d;
-	u_int8_t	e;
-	u_int8_t	f;
+	u_int8_t	g;
+	u_int16_t	j;
+	u_int8_t	n;
+	u_int8_t	o;
+	u_int8_t	p;
+	u_int8_t	r;
+	u_int8_t	u;
+	uint8_t		P;
+	u_int8_t	U;
 }				t_options;
 
 typedef struct	s_file_data
 {
 	char		*name;
 	uint8_t		*content;
+	t_arch		arch;
 	int32_t		size;
+	int32_t		off;
+	char		*sym_str;
 	t_btree		*symbols;
 }				t_file_data;
+
+typedef struct	s_symbol_data
+{
+	char		*name;
+	uint64_t	value;
+	uint8_t		type;
+	uint8_t		ext;
+	t_section	sect;
+}				t_symbol_data;
+
 
 typedef struct	s_dispatcher
 {
@@ -75,6 +107,7 @@ typedef struct	s_error
 	int			nb;
 	char		*message;
 }				t_error;
+
 
 /*
 ** Main
@@ -110,16 +143,30 @@ int8_t			handle_fat64(t_options *options, t_file_data *file);
 ** Symbols getter
 */
 
-int8_t			symbols_get(t_options *options, t_file_data *file, uint32_t ncmds);
+int8_t			symbols_get_symtab_cmd_off(t_file_data *file, uint32_t ncmds);
+int8_t			symbols_get_each64(t_options *options, t_file_data *file);
+int8_t			symbol_add(t_options *options, t_file_data *file, struct nlist_64 *sym);
+int8_t			symbol_to_tree(t_options *options, t_btree **head, t_symbol_data *symbol);
 
 
 
 /*
-** Security check
+** Symbols sorting functions
 */
 
-int8_t			is_sane(int32_t size, uint32_t offset, uint32_t to_read);
+int				(*symbol_get_sort_fun(t_options *options))(void*, void*);
+int				symbol_num_sort(void *curs_data, void *node_data);
+int				symbol_alpha_sort(void *curs_data, void *node_data);
+int				symbol_no_sort(void *curs_data, void *node_data);
 
+
+/*
+** Security checks
+*/
+
+int8_t			is_inside_file_rel(int32_t size, uint32_t offset, uint32_t to_read);
+int8_t			is_inside_file_abs(void* addr1, int32_t size, void* addr2);
+int8_t			is_secure_str(void *addr, int32_t size, char *str);
 
 /*
 ** Error functions

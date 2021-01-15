@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 19:13:22 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/12 20:00:31 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/15 19:24:22 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ void	ft_btree_insert(t_btree **head, t_btree *node, int (*f)(void*, void*))
 	curs = *head;
 	while (curs)
 	{
-		ret = f(node->data, curs->data);
-		if ((ret < 0 && !curs->left) || (ret >= 0 && !curs->right))
+		ret = f(curs->data, node->data);
+		if ((ret >= 0 && !curs->left) || (ret < 0 && !curs->right))
 		{
-			if (ret < 0)
+			if (ret >= 0)
 				curs->left = node;
 			else
 				curs->right = node;	
 			break ;		
 		}
 		else
-			curs = ret < 0 ? curs->left : curs->right;
+			curs = ret >= 0 ? curs->left : curs->right;
 	}
 }

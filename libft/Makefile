@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 14:42:41 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/14 18:45:53 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/15 18:22:15 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS_NAMES		= ft_strlen.c\
 				  ft_strdup.c\
 				  ft_strjoin.c\
 				  ft_strchr.c\
+				  ft_strnchr.c\
 				  ft_strcmp.c\
 				  ft_strncmp.c\
 				  ft_putstr.c\

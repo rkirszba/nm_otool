@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 16:16:50 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/14 19:17:36 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/15 19:46:02 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRCS_NAMES_NM	= ft_nm.c\
 				  handlers.c\
 				  security.c\
 				  symbols_get.c\
+				  symbols_sort_functions.c\
 				  errors.c
 
 SRCS_NAMES_OT	= ft_otool.c

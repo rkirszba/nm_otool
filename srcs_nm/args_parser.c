@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:49:22 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/14 12:45:52 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/15 19:33:39 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,24 @@ static void		set_option(t_options *options, char option)
 {
 	if (option == 'a')
 		options->a = TRUE;
-	if (option == 'b')
-		options->b = TRUE;
-	if (option == 'c')
-		options->c = TRUE;
-	if (option == 'd')
-		options->d = TRUE;
-	if (option == 'e')
-		options->e = TRUE;
-	if (option == 'f')
-		options->f = TRUE;
+	if (option == 'g')
+		options->g = TRUE;
+	if (option == 'j')
+		options->j = TRUE;
+	if (option == 'n')
+		options->n = TRUE;
+	if (option == 'o')
+		options->o = TRUE;
+	if (option == 'p')
+		options->p = TRUE;
+	if (option == 'r')
+		options->r = TRUE;
+	if (option == 'u')
+		options->u = TRUE;
+	if (option == 'P')
+		options->U = TRUE;
+	if (option == 'U')
+		options->U = TRUE;
 }
 
 int8_t				get_options(int ac, char **av, t_options *options, int *arg_offset)
