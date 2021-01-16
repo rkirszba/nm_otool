@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 15:30:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 18:41:03 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/16 18:43:19 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,12 @@ int8_t			handle_mh64(t_options *options, t_file_data *file)
 	// 	symbols_print64(file->symbols);
 	//begin test
 	if (ret == SUCCESS)
+	{
+		printf("text: %hhd\n", file->text_nb);
+		printf("data: %hhd\n", file->data_nb );
+		printf("bss:  %hhd\n", file->bss_nb);
 		ft_btree_inorder(file->symbols, &print_names);
+	}
 	else
 		printf("FAILURE\n");
 	//end test
