@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/15 20:03:33 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/16 18:22:04 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
 # include "libft.h"
+
+
+//a retirer
+# include <stdio.h>
+
 
 /*
 ** Basics
@@ -39,9 +44,19 @@
 # define MUNMAP_ERROR		-1
 # define NB_ERRORS			4
 
+/*
+** Section and segments name
+*/
+
+# define SEG_TEXT			"__TEXT"
+# define SEG_DATA			"__DATA"
+
+# define SECT_TEXT			"__text"
+# define SECT_DATA			"__data"
+# define SECT_BSS			"__bss"
+
 
 # define DEFAULT_FILE		"a.out"
-
 # define OPTIONS			"agjnopruPU"
 
 # define NB_FORMATS			4
@@ -55,7 +70,7 @@ typedef enum	e_arch
 typedef enum	e_section
 {
 	none,
-	test,
+	text,
 	data,
 	bss,
 	other
@@ -81,7 +96,12 @@ typedef struct	s_file_data
 	uint8_t		*content;
 	t_arch		arch;
 	int32_t		size;
-	int32_t		off;
+	int32_t		off_header;
+	int32_t		off_symtab;
+	uint32_t	sect_nb;
+	uint8_t		text_nb;
+	uint8_t		data_nb;
+	uint8_t		bss_nb;
 	char		*sym_str;
 	t_btree		*symbols;
 }				t_file_data;
@@ -138,17 +158,25 @@ int8_t			handle_mh64(t_options *options, t_file_data *file);
 int8_t			handle_fat32(t_options *options, t_file_data *file);
 int8_t			handle_fat64(t_options *options, t_file_data *file);
 
+/*
+** Segment parser
+*/
+
+int8_t			segment_parse64(t_file_data *file, int32_t offset);
 
 /*
 ** Symbols getter
 */
 
-int8_t			symbols_get_symtab_cmd_off(t_file_data *file, uint32_t ncmds);
-int8_t			symbols_get_each64(t_options *options, t_file_data *file);
-int8_t			symbol_add(t_options *options, t_file_data *file, struct nlist_64 *sym);
+int8_t			symbols_get64(t_options *options, t_file_data *file);
+
+
+/*
+** Symbols common util functions
+*/
+
+void			symbol_get_section(t_file_data *file, t_symbol_data *symbol, uint8_t sect_nb);
 int8_t			symbol_to_tree(t_options *options, t_btree **head, t_symbol_data *symbol);
-
-
 
 /*
 ** Symbols sorting functions
@@ -178,6 +206,13 @@ int8_t			print_options_error(char wrong_option);
 int8_t			print_loading_file_error(char *file_name);
 int8_t			print_invalid_file_error(char *file_name);
 int8_t			print_corrupted_file_error(char *file_name);
+
+/*
+** Free functions
+*/
+
+void			free_file_data(void *data);
+void			free_symbol_data(void *data);
 
 
 #endif

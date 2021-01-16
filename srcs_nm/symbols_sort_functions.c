@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 19:14:43 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/15 20:12:47 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/16 14:36:45 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		symbol_num_sort(void *curs_data, void *node_data)
 {
 	t_symbol_data	*curs;
 	t_symbol_data	*node;
-	long long		diff;
+	int32_t			diff;
 
 	curs = (t_symbol_data*)curs_data;
 	node = (t_symbol_data*)node_data;

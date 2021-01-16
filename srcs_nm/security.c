@@ -6,15 +6,15 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:47:38 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/15 18:18:31 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/16 18:39:07 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-int8_t	is_inside_file_rel(int32_t size, uint32_t offset, uint32_t to_read)
+int8_t	is_inside_file_rel(int32_t tot_size, uint32_t offset, uint32_t to_read)
 {
-	return (!(offset + to_read < offset || size - (offset + to_read) < 0));
+	return (!(offset + to_read < offset || tot_size - (offset + to_read) < 0));
 }
 
 int8_t	is_inside_file_abs(void* addr1, int32_t size, void* addr2)

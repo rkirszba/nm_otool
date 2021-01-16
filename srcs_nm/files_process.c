@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 13:17:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/15 17:27:33 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/16 17:32:47 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int8_t			file_dispatcher(t_options *options, t_file_data *file)
 	uint32_t			magic;
 	int					i;
 
-	(void)options;
 	if (is_inside_file_rel(file->size, 0, sizeof(uint32_t)) == FALSE)
 		return (print_invalid_file_error(file->name));
 	magic = *(uint32_t*)file->content;
