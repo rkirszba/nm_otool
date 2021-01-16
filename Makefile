@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 16:16:50 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/16 18:19:45 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/16 18:46:02 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ CFLAGS	= -Wall\
 		  -Werror
 
 #For developping purposes:
-# CFLAGS 	+= -fsanitize=address,undefined\
+#CFLAGS 	+= -fsanitize=address,undefined\
 				   -g3
 
 
