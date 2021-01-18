@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 18:22:04 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 16:08:33 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@
 
 
 # define DEFAULT_FILE		"a.out"
-# define OPTIONS			"agjnopruPU"
+# define OPTIONS			"agjnopruU"
+
+# define HEX_BASE			"0123456789abcdef"
 
 # define NB_FORMATS			4
 
@@ -78,15 +80,15 @@ typedef enum	e_section
 
 typedef struct	s_options
 {
+	u_int8_t	multi_input;
 	u_int8_t	a;
 	u_int8_t	g;
-	u_int16_t	j;
+	u_int8_t	j;
 	u_int8_t	n;
 	u_int8_t	o;
 	u_int8_t	p;
 	u_int8_t	r;
 	u_int8_t	u;
-	uint8_t		P;
 	u_int8_t	U;
 }				t_options;
 
@@ -119,7 +121,7 @@ typedef struct	s_symbol_data
 typedef struct	s_dispatcher
 {
 	uint32_t	magic;
-	int8_t		(*fun)(t_options*, t_file_data*);
+	int8_t		(*fun)(t_file_data*);
 }				t_dispatcher;
 
 typedef struct	s_error
@@ -136,27 +138,34 @@ typedef struct	s_error
 int				main(int ac, char **av);
 
 /*
+** Static variables
+*/
+
+t_options		*static_options(void);
+t_file_data		**static_file(void);
+
+/*
 ** Arguments parser functions
 */
 
-int8_t			get_options(int ac, char **av, t_options *options, int *arg_offset);
+int8_t			get_options(int ac, char **av, int *arg_offset);
 int8_t			get_files(t_list **list, int ac, char **av, int arg_offset);
 
 /*
 ** Files processing routine
 */
 
-int8_t			files_process(t_options *options, t_list *files);
-int8_t			file_dispatcher(t_options *options, t_file_data *file);
+int8_t			files_process(t_list *files);
+int8_t			file_dispatcher(t_file_data *file);
 
 /*
 ** Handlers
 */
 
-int8_t			handle_mh32(t_options *options, t_file_data *file);
-int8_t			handle_mh64(t_options *options, t_file_data *file);
-int8_t			handle_fat32(t_options *options, t_file_data *file);
-int8_t			handle_fat64(t_options *options, t_file_data *file);
+int8_t			handle_mh32(t_file_data *file);
+int8_t			handle_mh64(t_file_data *file);
+int8_t			handle_fat32(t_file_data *file);
+int8_t			handle_fat64(t_file_data *file);
 
 /*
 ** Segment parser
@@ -168,7 +177,7 @@ int8_t			segment_parse64(t_file_data *file, int32_t offset);
 ** Symbols getter
 */
 
-int8_t			symbols_get64(t_options *options, t_file_data *file);
+int8_t			symbols_get64(t_file_data *file);
 
 
 /*
@@ -176,17 +185,23 @@ int8_t			symbols_get64(t_options *options, t_file_data *file);
 */
 
 void			symbol_get_section(t_file_data *file, t_symbol_data *symbol, uint8_t sect_nb);
-int8_t			symbol_to_tree(t_options *options, t_btree **head, t_symbol_data *symbol);
+int8_t			symbol_to_tree(t_btree **head, t_symbol_data *symbol);
 
 /*
 ** Symbols sorting functions
 */
 
-int				(*symbol_get_sort_fun(t_options *options))(void*, void*);
+int				(*symbol_get_sort_fun(void))(void*, void*);
 int				symbol_num_sort(void *curs_data, void *node_data);
 int				symbol_alpha_sort(void *curs_data, void *node_data);
 int				symbol_no_sort(void *curs_data, void *node_data);
 
+/*
+** Print functions
+*/
+
+void			symbols_print(t_file_data *file);
+void			print_hex(uint64_t nb, uint32_t width);
 
 /*
 ** Security checks

@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   symbols_get_common.c                               :+:      :+:    :+:   */
+/*   symbols_get_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:36:56 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 17:40:23 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 17:22:37 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-int8_t	symbol_to_tree(t_options *options, t_btree **head, t_symbol_data *symbol)
+int8_t	symbol_to_tree(t_btree **head, t_symbol_data *symbol)
 {
 	t_btree	*new;
 
 	if (!(new = (t_btree*)malloc(sizeof(*new))))
 		return (print_malloc_error());
+	ft_bzero(new, sizeof(*new));
 	new->data = symbol;
-	ft_btree_insert(head, new, symbol_get_sort_fun(options));
+	ft_btree_insert(head, new, symbol_get_sort_fun());
 	return (SUCCESS);
 }
 

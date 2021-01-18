@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 19:14:43 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 14:36:45 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 16:26:54 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		symbol_no_sort(void *curs_data, void *node_data)
 {
 	(void)curs_data;
 	(void)node_data;
-	return (1);
+	return (-1);
 }
 
 int		symbol_alpha_sort(void *curs_data, void *node_data)
@@ -43,8 +43,11 @@ int		symbol_num_sort(void *curs_data, void *node_data)
 	return (diff > 0 ? 1 : -1);
 }
 
-int		(*symbol_get_sort_fun(t_options *options))(void*, void*)
+int		(*symbol_get_sort_fun(void))(void*, void*)
 {
+	t_options	*options;
+
+	options = static_options();
 	if (options->n)
 		return (&symbol_num_sort);
 	if (options->p)

@@ -6,13 +6,13 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 19:10:37 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 17:52:50 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 17:23:22 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static int8_t	symbol_get64(t_options *options, t_file_data *file, struct nlist_64 *sym)
+static int8_t	symbol_get64(t_file_data *file, struct nlist_64 *sym)
 {
 	t_symbol_data	*new_symbol;
 	char			*name;
@@ -23,6 +23,7 @@ static int8_t	symbol_get64(t_options *options, t_file_data *file, struct nlist_6
 		return (print_corrupted_file_error(file->name));
 	if (!(new_symbol = (t_symbol_data*)malloc(sizeof(*new_symbol))))
 		return (print_malloc_error());
+	ft_bzero(new_symbol, sizeof(*new_symbol));
 	if (!(new_symbol->name = ft_strdup((sym->n_un.n_strx) ? name : "")))
 	{
 		free(new_symbol);
@@ -32,13 +33,13 @@ static int8_t	symbol_get64(t_options *options, t_file_data *file, struct nlist_6
 	new_symbol->type = sym->n_type & N_TYPE;
 	new_symbol->ext = sym->n_type & N_EXT;
 	symbol_get_section(file, new_symbol, sym->n_sect);
-	ret = symbol_to_tree(options, &file->symbols, new_symbol);
+	ret = symbol_to_tree(&file->symbols, new_symbol);
 	if (ret == MALLOC_ERROR)
 		free_symbol_data(new_symbol);
 	return (ret ? ERROR : SUCCESS);
 }
 
-int8_t			symbols_get64(t_options *options, t_file_data *file)
+int8_t			symbols_get64(t_file_data *file)
 {
 	struct symtab_command	*sym_cmd;
 	struct nlist_64			*sym_tab;
@@ -57,7 +58,7 @@ int8_t			symbols_get64(t_options *options, t_file_data *file)
 	i = 0;
 	while (i < nsyms)
 	{
-		if (symbol_get64(options, file, &sym_tab[i]))
+		if (symbol_get64(file, &sym_tab[i]))
 			return (ERROR);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 15:30:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 18:43:19 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 17:23:13 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,38 +44,26 @@ static int8_t	load_commands_parse64(t_file_data *file, uint32_t ncmds)
 	return (file->off_symtab ? SUCCESS : print_corrupted_file_error(file->name));
 }
 
-int8_t			handle_mh64(t_options *options, t_file_data *file)
+int8_t			handle_mh64(t_file_data *file)
 {
 	struct mach_header_64	*header;
 	int8_t					ret;
 
+	file->arch = x64;
 	if (is_inside_file_rel(file->size, file->off_header, sizeof(*header)) == FALSE)
 		return (print_corrupted_file_error(file->name));
 	header = (struct mach_header_64 *)(file->content + file->off_header);
 	ret = load_commands_parse64(file, header->ncmds);
 	if (ret == SUCCESS)
-		ret = symbols_get64(options, file);
-	// if (ret == SUCCESS)
-	// 	symbols_print64(file->symbols);
-	//begin test
+		ret = symbols_get64(file);
 	if (ret == SUCCESS)
-	{
-		printf("text: %hhd\n", file->text_nb);
-		printf("data: %hhd\n", file->data_nb );
-		printf("bss:  %hhd\n", file->bss_nb);
-		ft_btree_inorder(file->symbols, &print_names);
-	}
-	else
-		printf("FAILURE\n");
-	//end test
-
+		symbols_print(file);
 	ft_btree_free(file->symbols, &free_symbol_data);
 	return (ret);
 }
 
-int8_t	handle_fat64(t_options *options, t_file_data *file)
+int8_t	handle_fat64(t_file_data *file)
 {
-	(void)options;
 	(void)file;
 	return (SUCCESS);
 }

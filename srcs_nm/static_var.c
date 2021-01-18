@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_btree_free.c                                    :+:      :+:    :+:   */
+/*   static_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/14 18:40:57 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 16:50:28 by rkirszba         ###   ########.fr       */
+/*   Created: 2021/01/18 11:58:47 by rkirszba          #+#    #+#             */
+/*   Updated: 2021/01/18 16:30:09 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_nm.h"
 
-void	ft_btree_free(t_btree *node, void (*f)(void*))
+t_options		*static_options(void)
 {
-	if (!node)
-		return ;
-	ft_btree_free(node->left, f);
-	ft_btree_free(node->right, f);
-	f(node->data);
-	free(node);
+	static t_options	options;
+
+	return (&options);
+}
+
+t_file_data		**static_file(void)
+{
+	static t_file_data *file;
+
+	return (&file);
 }

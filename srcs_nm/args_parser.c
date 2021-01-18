@@ -6,14 +6,17 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:49:22 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/15 19:33:39 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 17:10:49 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static void		set_option(t_options *options, char option)
+static void		set_option(char option)
 {
+	t_options	*options;
+
+	options = static_options();
 	if (option == 'a')
 		options->a = TRUE;
 	if (option == 'g')
@@ -30,13 +33,11 @@ static void		set_option(t_options *options, char option)
 		options->r = TRUE;
 	if (option == 'u')
 		options->u = TRUE;
-	if (option == 'P')
-		options->U = TRUE;
 	if (option == 'U')
 		options->U = TRUE;
 }
 
-int8_t				get_options(int ac, char **av, t_options *options, int *arg_offset)
+int8_t				get_options(int ac, char **av, int *arg_offset)
 {
 	char	*arg;
 	size_t	i;
@@ -57,7 +58,7 @@ int8_t				get_options(int ac, char **av, t_options *options, int *arg_offset)
 		{
 			if (!ft_strchr(OPTIONS, (int)(arg[i])))
 				return (print_options_error(arg[i]));
-			set_option(options, arg[i]);
+			set_option(arg[i]);
 		}
 	}
 	return (SUCCESS);
@@ -69,21 +70,21 @@ static t_list	*create_new_file_node(char *file_name)
 	t_file_data	*data;
 	t_list		*new;
 
-	name_dup = NULL;
-	data = NULL;
-	new = NULL;
-	if (!(name_dup = ft_strdup(file_name))
-		|| !(data = (t_file_data*)malloc(sizeof(*data)))
-		|| !(new = (t_list*)malloc(sizeof(new))))
+	if (!(data = (t_file_data*)malloc(sizeof(*data)))
+		|| !(name_dup = ft_strdup(file_name)))
 	{
-		free(name_dup);
 		free(data);
-		free(new);
 		print_malloc_error();
 		return (NULL);
 	}
 	ft_bzero(data, sizeof(*data));
 	data->name = name_dup;
+	if (!(new = ft_list_new((void*)data)))
+	{
+		free_file_data(data);
+		print_malloc_error();
+		return (NULL);
+	}
 	new->data = (void*)data;
 	return (new);
 }
@@ -105,5 +106,7 @@ int8_t			get_files(t_list **list, int ac, char **av, int arg_offset)
 			return (MALLOC_ERROR);
 		ft_list_append(list, new);
 	}
+	if ((*list)->next)
+		static_options()->multi_input = TRUE;
 	return (SUCCESS);
 }

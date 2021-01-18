@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 13:17:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 17:32:47 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 16:35:20 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int8_t	file_loading_routine(t_file_data *file)
 	return (SUCCESS);
 }
 
-int8_t			file_dispatcher(t_options *options, t_file_data *file)
+int8_t			file_dispatcher(t_file_data *file)
 {
 	static t_dispatcher	dispatcher[NB_FORMATS] = {
 		{MH_MAGIC, &handle_mh32},
@@ -52,11 +52,11 @@ int8_t			file_dispatcher(t_options *options, t_file_data *file)
 	i = -1;
 	while (++i < NB_FORMATS)
 		if (dispatcher[i].magic == magic)
-			return (dispatcher[i].fun(options, file));
+			return (dispatcher[i].fun(file));
 	return (print_invalid_file_error(file->name));
 }
 
-int8_t			files_process(t_options *options, t_list *files)
+int8_t			files_process(t_list *files)
 {
 	int8_t		ret;
 	int8_t		tmp_ret;
@@ -67,7 +67,7 @@ int8_t			files_process(t_options *options, t_list *files)
 	{
 		file = (t_file_data*)(files->data);
 		if ((tmp_ret = file_loading_routine(file)) == SUCCESS)
-			tmp_ret = file_dispatcher(options, files->data);
+			tmp_ret = file_dispatcher(files->data);
 		if (file->content && file->content != MAP_FAILED)
 			if (munmap(file->content, file->size) < 0)
 			{
