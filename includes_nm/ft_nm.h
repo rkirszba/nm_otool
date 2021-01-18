@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 16:08:33 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 19:46:40 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,20 @@
 
 # define HEX_BASE			"0123456789abcdef"
 
-# define NB_FORMATS			4
+# define NB_MAGICS			8
+# define NB_HANDLERS		4
 
 typedef enum	e_arch
 {
 	x32,
 	x64
 }				t_arch;
+
+typedef enum	e_endian
+{
+	little	= 0,
+	big		= 1 
+}				t_endian;
 
 typedef enum	e_section
 {
@@ -96,6 +103,7 @@ typedef struct	s_file_data
 {
 	char		*name;
 	uint8_t		*content;
+	t_endian	endian;
 	t_arch		arch;
 	int32_t		size;
 	int32_t		off_header;
@@ -143,6 +151,7 @@ int				main(int ac, char **av);
 
 t_options		*static_options(void);
 t_file_data		**static_file(void);
+uint32_t		*static_magics(void);
 
 /*
 ** Arguments parser functions
@@ -210,6 +219,14 @@ void			print_hex(uint64_t nb, uint32_t width);
 int8_t			is_inside_file_rel(int32_t size, uint32_t offset, uint32_t to_read);
 int8_t			is_inside_file_abs(void* addr1, int32_t size, void* addr2);
 int8_t			is_secure_str(void *addr, int32_t size, char *str);
+
+/*
+** Endian wrappers
+*/
+
+uint32_t		endian_wrap_32(uint32_t nb, t_endian endian);
+uint64_t		endian_wrap_64(uint64_t nb, t_endian endian);
+
 
 /*
 ** Error functions

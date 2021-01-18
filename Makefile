@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 16:16:50 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/18 16:10:38 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/18 19:46:53 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS_NAMES_NM	= ft_nm.c\
 				  symbols_get_utils.c\
 				  symbols_sort_functions.c\
 				  symbols_print.c\
+				  endian_wrapper.c\
 				  errors.c
 			#	  free_functions.c\
 

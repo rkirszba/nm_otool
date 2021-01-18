@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:27:04 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 11:50:31 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 18:26:30 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int				main(int ac, char **av)
 
 	if (get_options(ac, av, &arg_offset) == ERROR)
 		return (EXIT_FAILURE);
+	files = NULL;
 	if (get_files(&files, ac, av, arg_offset) == MALLOC_ERROR)
 		return (EXIT_FAILURE);
 	ret = files_process(files);

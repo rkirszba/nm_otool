@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 15:55:09 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 11:27:40 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/18 19:41:53 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	section_actualize64(t_file_data *file, struct section_64 *sect_tab,
 			uint32_t index)
 {
 	//voir si toujours pertinent de faire strncmp
+	//peut etre besoin de l'endianness
 	if (!ft_strncmp(sect_tab[index].segname, SEG_TEXT, 16)
 		&& !ft_strncmp(sect_tab[index].sectname, SECT_TEXT, 16))
 		file->text_nb = file->sect_nb + index + 1;
@@ -38,7 +39,7 @@ int8_t		segment_parse64(t_file_data *file, int32_t offset)
 		return (print_corrupted_file_error(file->name));
 	seg_cmd = (struct segment_command_64*)(file->content + offset);
 	offset += sizeof(*seg_cmd);
-	nsects = seg_cmd->nsects;
+	nsects = endian_wrap_32(seg_cmd->nsects, file->endian);
 	if (is_inside_file_rel(file->size, offset,
 			sizeof(*sect_tab) * nsects) == FALSE)
 		return (print_corrupted_file_error(file->name));
