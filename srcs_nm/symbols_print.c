@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 11:30:48 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 11:27:37 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 18:49:22 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ void	print_hex(uint64_t nb, uint32_t width)
 	write(1, &HEX_BASE[nb % 16], 1);
 }
 
-static void	print_value(uint64_t value, uint8_t type, t_arch arch)
+static void	print_value(uint64_t value, uint8_t type, t_bits arch)
 {
 	if (type == N_UNDF) // voir si pas d'autre
 	{
 		ft_putstr("        ");
-		if (arch == x64)
+		if (arch == bits64)
 			ft_putstr("        ");
 	}
-	else if (arch == x32)
+	else if (arch == bits32)
 		print_hex(value, 8);
 	else
 		print_hex(value, 16);
-	ft_putstr(" ");
+	write(1, " ", 1);
 }
 
 static void	print_type(t_symbol_data *symbol)
@@ -82,6 +82,7 @@ static void	symbol_print(void *data)
 	t_file_data		*file;
 	t_symbol_data	*symbol;
 
+	//gerer architecture
 	options = static_options();
 	file = *static_file();
 	symbol = (t_symbol_data*)data;
@@ -94,7 +95,7 @@ static void	symbol_print(void *data)
 	}
 	if (!options->j && !options->u)
 	{
-		print_value(symbol->value, symbol->type, file->arch);
+		print_value(symbol->value, symbol->type, file->bits);
 		print_type(symbol);
 	}
 	ft_putstr(symbol->name);
@@ -106,10 +107,16 @@ void		symbols_print(t_file_data *file)
 	t_options	*options;
 
 	options = static_options();
-	if (options->multi_input)
+	if (options->multi_input || file->arch)
 	{
 		write(1, "\n", 1);
 		ft_putstr(file->name);
+		if (file->arch)
+		{
+			ft_putstr(" (for architecture ");
+			ft_putstr(file->arch);
+			write(1, ")", 1);
+		}
 		write(1, ":\n", 2);
 	}
 	*(static_file()) = file;

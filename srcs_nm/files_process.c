@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 13:17:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 12:58:58 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 20:23:04 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static int8_t	file_loading_routine(t_file_data *file)
 	return (SUCCESS);
 }
 
-int8_t			file_dispatcher(t_file_data *file)
+int8_t			dispatcher(t_file_data *file)
 {
-	static int8_t (*dispatcher[NB_HANDLERS])(t_file_data *) = {
+	static int8_t (*tab[NB_HANDLERS])(t_file_data *) = {
 		&handle_mh_32,
 		&handle_mh_64,
 		&handle_fat_32,
@@ -47,18 +47,18 @@ int8_t			file_dispatcher(t_file_data *file)
 	uint32_t			magic;
 	int					i;
 
-	if (is_inside_file_rel(file->size, 0, sizeof(uint32_t)) == FALSE)
-		return (print_invalid_file_error(file->name));
-	magic = *(uint32_t*)file->content;
+	if (is_inside_file_rel(file->size, file->off_header, sizeof(uint32_t)) == FALSE)
+		return (print_invalid_file_error(file));
+	magic = *(uint32_t*)(file->content + file->off_header);
 	magics_tab = static_magics();
 	i = -1;
-	while (++i < NB_MAGICS)
+	while (++i < file->fat ? NB_MAGICS / 2 : NB_MAGICS)
 		if (magics_tab[i] == magic)
 			break ;
-	if (i == NB_MAGICS)
-		return (print_invalid_file_error(file->name));
+	if (i == (file->fat ? NB_MAGICS / 2 : NB_MAGICS))
+		return (print_invalid_file_error(file));
 	file->endian = i % 2;
-	return (dispatcher[i / 2](file));
+	return (tab[i / 2](file));
 }
 
 int8_t			files_process(t_list *files)
@@ -72,7 +72,7 @@ int8_t			files_process(t_list *files)
 	{
 		file = (t_file_data*)(files->data);
 		if ((tmp_ret = file_loading_routine(file)) == SUCCESS)
-			tmp_ret = file_dispatcher(files->data);
+			tmp_ret = dispatcher(files->data);
 		if (file->content && file->content != MAP_FAILED)
 			if (munmap(file->content, file->size) < 0)
 			{

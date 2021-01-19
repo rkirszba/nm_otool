@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 11:28:59 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 20:22:00 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@
 # define NB_MAGICS			8
 # define NB_HANDLERS		4
 
-typedef enum	e_arch
+typedef enum	e_bits
 {
-	x32,
-	x64
-}				t_arch;
+	bits32,
+	bits64
+}				t_bits;
 
 typedef enum	e_endian
 {
@@ -84,6 +84,13 @@ typedef enum	e_section
 	bss,
 	other
 }				t_section;
+
+typedef struct	s_arch
+{
+	char			*str;
+	cpu_type_t		cpu_type;
+	cpu_subtype_t	cpu_subtype;
+}				t_arch;
 
 typedef struct	s_options
 {
@@ -101,12 +108,15 @@ typedef struct	s_options
 typedef struct	s_file_data
 {
 	char		*name;
+	char		*arch;
+	uint8_t		fat;
+	uint8_t		multi_arch;
 	uint8_t		*content;
 	t_endian	endian;
-	t_arch		arch;
+	t_bits		bits;
 	int32_t		size;
 	int32_t		off_header;
-	int32_t		off_symtab;
+	int32_t		off_symcmd;
 	uint32_t	sect_nb;
 	uint8_t		text_nb;
 	uint8_t		data_nb;
@@ -165,7 +175,8 @@ int8_t			get_files(t_list **list, int ac, char **av, int arg_offset);
 */
 
 int8_t			files_process(t_list *files);
-int8_t			file_dispatcher(t_file_data *file);
+// int8_t			file_dispatcher(t_file_data *file);
+int8_t			dispatcher(t_file_data *file);
 
 /*
 ** Handlers
@@ -180,13 +191,8 @@ int8_t			handle_fat_64(t_file_data *file);
 ** Segment parser
 */
 
+int8_t			segment_parse_32(t_file_data *file, int32_t offset);
 int8_t			segment_parse_64(t_file_data *file, int32_t offset);
-
-/*
-** Symbols getter
-*/
-
-int8_t			symbols_get_64(t_file_data *file);
 
 
 /*
@@ -224,9 +230,16 @@ int8_t			is_secure_str(void *addr, int32_t size, char *str);
 ** Endian wrappers
 */
 
-uint32_t		endian_wrap_32(uint32_t nb, t_endian endian);
-uint64_t		endian_wrap_64(uint64_t nb, t_endian endian);
+int32_t			endian_wrap_32(int32_t nb, t_endian endian);
+uint32_t		endian_wrap_u32(uint32_t nb, t_endian endian);
+uint64_t		endian_wrap_u64(uint64_t nb, t_endian endian);
 
+/*
+** Architectures
+*/
+
+char			*get_file_arch_32(struct fat_arch *arch, t_endian endian);
+char			*get_file_arch_64(struct fat_arch_64 *arch, t_endian endian);
 
 /*
 ** Error functions
@@ -236,8 +249,8 @@ int8_t			print_malloc_error(void);
 int8_t			print_munmap_error(void);
 int8_t			print_options_error(char wrong_option);
 int8_t			print_loading_file_error(char *file_name);
-int8_t			print_invalid_file_error(char *file_name);
-int8_t			print_corrupted_file_error(char *file_name);
+int8_t			print_invalid_file_error(t_file_data *file);
+int8_t			print_corrupted_file_error(t_file_data *file);
 
 /*
 ** Free functions

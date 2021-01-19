@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 19:09:03 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 19:53:40 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 19:40:35 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static uint64_t	byte_swap_u64(uint64_t nb)
 		| ((nb << 0x38) & 0xff00000000000000));
 }
 
-uint32_t		endian_wrap_32(uint32_t nb, t_endian endian)
+uint32_t		endian_wrap_u32(uint32_t nb, t_endian endian)
 {
 	if (endian == little)
 		return (nb);
 	return (byte_swap_u32(nb));
 }
 
-uint64_t		endian_wrap_64(uint64_t nb, t_endian endian)
+uint64_t		endian_wrap_u64(uint64_t nb, t_endian endian)
 {
 	if (endian == little)
 		return (nb);

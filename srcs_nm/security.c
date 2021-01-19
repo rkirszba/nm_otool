@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:47:38 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 18:39:07 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 20:14:12 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 int8_t	is_inside_file_rel(int32_t tot_size, uint32_t offset, uint32_t to_read)
 {
-	return (!(offset + to_read < offset || tot_size - (offset + to_read) < 0));
+	uint32_t	size;
+
+	size = (uint32_t)tot_size;
+	if (offset + to_read < offset)
+		return (FALSE);
+	if (size < offset + to_read)
+		return (FALSE);
+	return (TRUE);
 }
 
 int8_t	is_inside_file_abs(void* addr1, int32_t size, void* addr2)

@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 19:29:11 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/14 19:10:03 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 20:54:00 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int8_t	print_options_error(char wrong_option)
 	ft_putstr_fd("nm: Unknown command line argument '-", 2);
 	write(2, &wrong_option, 1);
 	ft_putstr_fd("'.\n", 2);
+	// ajouter usage
 	return (ERROR);
 }
 
@@ -63,18 +64,30 @@ int8_t	print_loading_file_error(char *file_name)
 	return (ERROR);
 }
 
-int8_t	print_invalid_file_error(char *file_name)
+int8_t	print_invalid_file_error(t_file_data *file)
 {
 	ft_putstr_fd("nm: error: ", 2);
-	ft_putstr_fd(file_name, 2);
+	ft_putstr_fd(file->name, 2);
+	if (file->arch)
+	{
+		ft_putstr_fd(" (for achitecture ", 2);
+		ft_putstr_fd(file->arch, 2);
+		ft_putstr_fd(")", 2);
+	}
 	ft_putstr_fd(" The file was not recognized as a valid object file\n", 2);
 	return (ERROR);
 }
 
-int8_t	print_corrupted_file_error(char *file_name)
+int8_t	print_corrupted_file_error(t_file_data *file)
 {
 	ft_putstr_fd("nm: error: ", 2);
-	ft_putstr_fd(file_name, 2);
+	ft_putstr_fd(file->name, 2);
+	if (file->arch)
+	{
+		ft_putstr_fd(" (for architecture ", 2);
+		ft_putstr_fd(file->arch, 2);
+		ft_putstr_fd(") ", 2);
+	}
 	ft_putstr_fd(" truncated or malformed object\n", 2);
 	return (ERROR);
 }
