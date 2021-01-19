@@ -6,16 +6,15 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 15:55:09 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 19:41:53 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 11:09:38 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static void	section_actualize64(t_file_data *file, struct section_64 *sect_tab,
+static void	section_actualize_64(t_file_data *file, struct section_64 *sect_tab,
 			uint32_t index)
 {
-	//voir si toujours pertinent de faire strncmp
 	//peut etre besoin de l'endianness
 	if (!ft_strncmp(sect_tab[index].segname, SEG_TEXT, 16)
 		&& !ft_strncmp(sect_tab[index].sectname, SECT_TEXT, 16))
@@ -28,7 +27,7 @@ static void	section_actualize64(t_file_data *file, struct section_64 *sect_tab,
 		file->bss_nb = file->sect_nb + index + 1;
 }
 
-int8_t		segment_parse64(t_file_data *file, int32_t offset)
+int8_t		segment_parse_64(t_file_data *file, int32_t offset)
 {
 	struct segment_command_64	*seg_cmd;
 	struct section_64			*sect_tab;
@@ -47,7 +46,7 @@ int8_t		segment_parse64(t_file_data *file, int32_t offset)
 	i = 0;
 	while (i < nsects)
 	{
-		section_actualize64(file, sect_tab, i);
+		section_actualize_64(file, sect_tab, i);
 		i++;
 	}
 	file->sect_nb += nsects;

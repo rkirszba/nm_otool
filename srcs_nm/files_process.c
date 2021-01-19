@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 13:17:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 18:28:23 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 12:58:58 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int8_t	file_loading_routine(t_file_data *file)
 int8_t			file_dispatcher(t_file_data *file)
 {
 	static int8_t (*dispatcher[NB_HANDLERS])(t_file_data *) = {
-		&handle_mh32,
-		&handle_mh64,
-		&handle_fat32,
-		&handle_fat64
+		&handle_mh_32,
+		&handle_mh_64,
+		&handle_fat_32,
+		&handle_fat_64
 	};
 	uint32_t			*magics_tab;
 	uint32_t			magic;
@@ -49,8 +49,8 @@ int8_t			file_dispatcher(t_file_data *file)
 
 	if (is_inside_file_rel(file->size, 0, sizeof(uint32_t)) == FALSE)
 		return (print_invalid_file_error(file->name));
-	magics_tab = static_magics();
 	magic = *(uint32_t*)file->content;
+	magics_tab = static_magics();
 	i = -1;
 	while (++i < NB_MAGICS)
 		if (magics_tab[i] == magic)

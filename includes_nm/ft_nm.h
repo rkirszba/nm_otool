@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 19:46:40 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 11:28:59 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 
 
 # define DEFAULT_FILE		"a.out"
-# define OPTIONS			"agjnopruU"
+# define OPTIONS			"gjnopruU"
 
 # define HEX_BASE			"0123456789abcdef"
 
@@ -88,7 +88,6 @@ typedef enum	e_section
 typedef struct	s_options
 {
 	u_int8_t	multi_input;
-	u_int8_t	a;
 	u_int8_t	g;
 	u_int8_t	j;
 	u_int8_t	n;
@@ -120,6 +119,7 @@ typedef struct	s_symbol_data
 {
 	char		*name;
 	uint64_t	value;
+	uint8_t		debug;
 	uint8_t		type;
 	uint8_t		ext;
 	t_section	sect;
@@ -171,22 +171,22 @@ int8_t			file_dispatcher(t_file_data *file);
 ** Handlers
 */
 
-int8_t			handle_mh32(t_file_data *file);
-int8_t			handle_mh64(t_file_data *file);
-int8_t			handle_fat32(t_file_data *file);
-int8_t			handle_fat64(t_file_data *file);
+int8_t			handle_mh_32(t_file_data *file);
+int8_t			handle_mh_64(t_file_data *file);
+int8_t			handle_fat_32(t_file_data *file);
+int8_t			handle_fat_64(t_file_data *file);
 
 /*
 ** Segment parser
 */
 
-int8_t			segment_parse64(t_file_data *file, int32_t offset);
+int8_t			segment_parse_64(t_file_data *file, int32_t offset);
 
 /*
 ** Symbols getter
 */
 
-int8_t			symbols_get64(t_file_data *file);
+int8_t			symbols_get_64(t_file_data *file);
 
 
 /*

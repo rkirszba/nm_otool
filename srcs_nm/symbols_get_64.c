@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   symbols_get64.c                                    :+:      :+:    :+:   */
+/*   symbols_get_64.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 19:10:37 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 19:48:20 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 11:34:55 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static int8_t	symbol_get64(t_file_data *file, struct nlist_64 *sym)
+static int8_t	symbol_get_64(t_file_data *file, struct nlist_64 *sym)
 {
 	t_symbol_data	*new_symbol;
 	char			*name;
@@ -32,8 +32,9 @@ static int8_t	symbol_get64(t_file_data *file, struct nlist_64 *sym)
 		return (print_malloc_error());
 	}
 	new_symbol->value = endian_wrap_64(sym->n_value, file->endian); // !! 32 pour symbol_get_32 !!
-	new_symbol->type = endian_wrap_32(sym->n_type, file->endian) & N_TYPE;
-	new_symbol->ext = endian_wrap_32(sym->n_type, file->endian) & N_EXT;
+	new_symbol->debug = sym->n_type & N_STAB;
+	new_symbol->type = sym->n_type & N_TYPE;
+	new_symbol->ext = sym->n_type & N_EXT;
 	symbol_get_section(file, new_symbol, sym->n_sect);
 	ret = symbol_to_tree(&file->symbols, new_symbol);
 	if (ret == MALLOC_ERROR)
@@ -41,7 +42,7 @@ static int8_t	symbol_get64(t_file_data *file, struct nlist_64 *sym)
 	return (ret ? ERROR : SUCCESS);
 }
 
-int8_t			symbols_get64(t_file_data *file)
+int8_t			symbols_get_64(t_file_data *file)
 {
 	struct symtab_command	*sym_cmd;
 	struct nlist_64			*sym_tab;
@@ -61,7 +62,7 @@ int8_t			symbols_get64(t_file_data *file)
 	i = 0;
 	while (i < nsyms)
 	{
-		if (symbol_get64(file, &sym_tab[i]))
+		if (symbol_get_64(file, &sym_tab[i]))
 			return (ERROR);
 		i++;
 	}

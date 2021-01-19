@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 11:30:48 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 16:16:05 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 11:27:37 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,37 @@ static void	print_type(t_symbol_data *symbol)
 	// a affiner !!
 	if (symbol->type == N_UNDF)
 		write(1, symbol->ext == TRUE ? "U" : "u", 1);
-	if (symbol->type == N_ABS)
+	else if (symbol->type == N_ABS)
 		write(1, symbol->ext == TRUE ? "A" : "a", 1);
-	if (symbol->type == N_SECT)
+	else if (symbol->type == N_SECT)
 	{
 		if (symbol->sect == text)
 			write(1, symbol->ext == TRUE ? "T" : "t", 1);
-		if (symbol->sect == data)
+		else if (symbol->sect == data)
 			write(1, symbol->ext == TRUE ? "D" : "d", 1);
-		if (symbol->sect == bss)
+		else if (symbol->sect == bss)
 			write(1, symbol->ext == TRUE ? "B" : "b", 1);
-		if (symbol->sect == other)
+		else if (symbol->sect == other)
 			write(1, symbol->ext == TRUE ? "S" : "s", 1);
+		else
+			write(1, "?", 1);
 	}
- 	if (symbol->type == N_INDR)
+ 	else if (symbol->type == N_INDR)
 	 	write(1, symbol->ext == TRUE ? "I" : "i", 1);
+	else
+		write(1, "?", 1);
+	
 	write(1, " ", 1);
 }
 
 static uint8_t	symbol_allow_print(t_options *options, t_symbol_data *symbol)
 {
+	if (symbol->debug)
+		return (FALSE);
 	if (options->u && symbol->sect != N_UNDF)
 		return FALSE;
 	if (options->U && symbol->sect == N_UNDF)
 		return FALSE;
-	//mettre condition debuggeur
 	if (options->g && symbol->ext == FALSE)
 		return FALSE;
 	return TRUE; 

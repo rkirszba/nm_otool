@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:49:22 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 18:24:59 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/19 11:30:20 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static void		set_option(char option)
 	t_options	*options;
 
 	options = static_options();
-	if (option == 'a')
-		options->a = TRUE;
 	if (option == 'g')
 		options->g = TRUE;
 	if (option == 'j')
