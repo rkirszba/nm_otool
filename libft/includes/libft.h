@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 14:32:42 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 20:53:06 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/20 17:37:23 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct	s_btree
 */
 
 size_t			ft_strlen(const char *s);
+size_t			ft_strnlen(const char *s, size_t max_len);
 char			*ft_strcpy(char *dst, const char *src);
 char			*ft_strncpy(char * dst, const char * src, size_t len);
 char			*ft_strcat(char *restrict s1, const char *restrict s2);

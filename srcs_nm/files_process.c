@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 13:17:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 20:23:04 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/20 11:59:46 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int8_t			dispatcher(t_file_data *file)
 	magic = *(uint32_t*)(file->content + file->off_header);
 	magics_tab = static_magics();
 	i = -1;
-	while (++i < file->fat ? NB_MAGICS / 2 : NB_MAGICS)
+	while (++i < (file->fat ? NB_MAGICS / 2 : NB_MAGICS))
 		if (magics_tab[i] == magic)
 			break ;
 	if (i == (file->fat ? NB_MAGICS / 2 : NB_MAGICS))

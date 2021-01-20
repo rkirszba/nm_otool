@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:27:57 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 20:24:32 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/20 17:55:43 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,19 @@ static int8_t	symbol_get_32(t_file_data *file, struct nlist *sym)
 	char			*name;
 	uint32_t		n_strx;
 	int8_t			ret;
+	uint32_t		n;
 
 	n_strx = endian_wrap_u32(sym->n_un.n_strx, file->endian);
 	name = file->sym_str + n_strx;
-	if (is_secure_str(file->content, file->size, name) == FALSE)
+	// if (is_secure_str(file->content, file->size, name) == FALSE)
+	// 	return (print_corrupted_file_error(file));
+	if (is_inside_file_abs(file->content, file->size, (void*)name) == FALSE)
 		return (print_corrupted_file_error(file));
 	if (!(new_symbol = (t_symbol_data*)malloc(sizeof(*new_symbol))))
 		return (print_malloc_error());
 	ft_bzero(new_symbol, sizeof(*new_symbol));
-	if (!(new_symbol->name = ft_strdup((n_strx) ? name : "")))
+	n = distance_to_eof(file->content, file->size, (void*)name);
+	if (!(new_symbol->name = ft_strndup(((n_strx) ? name : ""), n - 1)))
 	{
 		free(new_symbol);
 		return (print_malloc_error());

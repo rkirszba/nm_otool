@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 14:42:41 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/19 20:53:25 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/20 17:36:46 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ CFLAGS	= -Wall\
 
 SRCS_DIR		= srcs/
 SRCS_NAMES		= ft_strlen.c\
+				  ft_strnlen.c\
 				  ft_strcpy.c\
 				  ft_strncpy.c\
 				  ft_strcat.c\

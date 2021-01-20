@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 20:22:00 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/20 17:18:48 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,6 @@ int8_t			get_files(t_list **list, int ac, char **av, int arg_offset);
 */
 
 int8_t			files_process(t_list *files);
-// int8_t			file_dispatcher(t_file_data *file);
 int8_t			dispatcher(t_file_data *file);
 
 /*
@@ -225,6 +224,7 @@ void			print_hex(uint64_t nb, uint32_t width);
 int8_t			is_inside_file_rel(int32_t size, uint32_t offset, uint32_t to_read);
 int8_t			is_inside_file_abs(void* addr1, int32_t size, void* addr2);
 int8_t			is_secure_str(void *addr, int32_t size, char *str);
+uint32_t		distance_to_eof(void *addr1, int32_t size, void *addr2);
 
 /*
 ** Endian wrappers
