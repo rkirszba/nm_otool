@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:36:56 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/18 17:22:37 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 16:36:09 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int8_t	symbol_to_tree(t_btree **head, t_symbol_data *symbol)
 	return (SUCCESS);
 }
 
-void	symbol_get_section(t_file_data *file, t_symbol_data *symbol, uint8_t sect_nb)
+void	symbol_get_section(t_file_data *file, t_symbol_data *symbol,
+		uint8_t sect_nb)
 {
 	if (sect_nb == NO_SECT)
 		symbol->sect = none;

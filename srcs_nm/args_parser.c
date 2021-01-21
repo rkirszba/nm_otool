@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 18:49:22 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 11:30:20 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 17:24:39 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void		set_option(char option)
 		options->U = TRUE;
 }
 
-int8_t				get_options(int ac, char **av, int *arg_offset)
+int8_t			get_options(int ac, char **av, int *arg_offset)
 {
 	char	*arg;
 	size_t	i;

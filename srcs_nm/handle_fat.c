@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 17:26:55 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/20 15:55:50 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 16:53:45 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int8_t			handle_multi_arch_64(t_file_data *file, struct fat_arch_64 *arch,
 	file->multi_arch = TRUE;
 	endian = file->endian;
 	ret = SUCCESS;
-	i = 0;
-	while (i < nfat_arch)
+	i = -1;
+	while (++i < nfat_arch)
 	{
 		tmp_ret = SUCCESS;
 		file->arch = get_file_arch_64(&arch[i], endian);
@@ -47,7 +47,6 @@ int8_t			handle_multi_arch_64(t_file_data *file, struct fat_arch_64 *arch,
 		if (tmp_ret && ret == SUCCESS)
 			ret = ERROR;
 		file_reinit(file);
-		i++;
 	}
 	return (ret);
 }
@@ -70,9 +69,8 @@ int8_t			handle_fat_64(t_file_data *file)
 			nfat_arch * nfat_arch) == FALSE)
 		return (print_corrupted_file_error(file));
 	arch = (struct fat_arch_64*)(file->content + sizeof(*header));
-	i = 0;
-	while (i < nfat_arch)
-	{
+	i = -1;
+	while (++i < nfat_arch)
 		if (endian_wrap_u32(arch[i].cputype, file->endian) == CPU_TYPE_X86_64)
 		{
 			file->off_header = endian_wrap_u32(arch[i].offset, file->endian);
@@ -80,8 +78,6 @@ int8_t			handle_fat_64(t_file_data *file)
 				return (print_corrupted_file_error(file));
 			return (dispatcher(file));
 		}
-		i++;
-	}
 	return (handle_multi_arch_64(file, arch, nfat_arch));
 }
 
@@ -96,8 +92,8 @@ int8_t			handle_multi_arch_32(t_file_data *file, struct fat_arch *arch,
 	file->multi_arch = TRUE;
 	endian = file->endian;
 	ret = SUCCESS;
-	i = 0;
-	while (i < nfat_arch)
+	i = -1;
+	while (++i < nfat_arch)
 	{
 		tmp_ret = SUCCESS;
 		file->arch = get_file_arch_32(&arch[i], endian);
@@ -109,7 +105,6 @@ int8_t			handle_multi_arch_32(t_file_data *file, struct fat_arch *arch,
 		if (tmp_ret && ret == SUCCESS)
 			ret = ERROR;
 		file_reinit(file);
-		i++;
 	}
 	return (ret);
 }
@@ -132,9 +127,8 @@ int8_t			handle_fat_32(t_file_data *file)
 			nfat_arch * nfat_arch) == FALSE)
 		return (print_corrupted_file_error(file));
 	arch = (struct fat_arch*)(file->content + sizeof(*header));
-	i = 0;
-	while (i < nfat_arch)
-	{
+	i = -1;
+	while (++i < nfat_arch)
 		if (endian_wrap_u32(arch[i].cputype, file->endian) == CPU_TYPE_X86_64)
 		{
 			file->off_header = endian_wrap_u32(arch[i].offset, file->endian);
@@ -142,7 +136,5 @@ int8_t			handle_fat_32(t_file_data *file)
 				return (print_corrupted_file_error(file));
 			return (dispatcher(file));
 		}
-		i++;
-	}
 	return (handle_multi_arch_32(file, arch, nfat_arch));
 }

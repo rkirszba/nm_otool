@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 15:55:09 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 20:27:24 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 16:35:35 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	section_actualize_64(t_file_data *file, struct section_64 *sect_tab,
 			uint32_t index)
 {
-	//peut etre besoin de l'endianness
 	if (!ft_strncmp(sect_tab[index].segname, SEG_TEXT, 16)
 		&& !ft_strncmp(sect_tab[index].sectname, SECT_TEXT, 16))
 		file->text_nb = file->sect_nb + index + 1;
@@ -43,12 +42,10 @@ int8_t		segment_parse_64(t_file_data *file, int32_t offset)
 			sizeof(*sect_tab) * nsects) == FALSE)
 		return (print_corrupted_file_error(file));
 	sect_tab = (struct section_64*)(file->content + offset);
-	i = 0;
-	while (i < nsects)
-	{
+	i = -1;
+	while (++i < nsects)
 		section_actualize_64(file, sect_tab, i);
 		i++;
-	}
 	file->sect_nb += nsects;
 	return (SUCCESS);
 }
@@ -56,7 +53,6 @@ int8_t		segment_parse_64(t_file_data *file, int32_t offset)
 static void	section_actualize_32(t_file_data *file, struct section *sect_tab,
 			uint32_t index)
 {
-	//peut etre besoin de l'endianness
 	if (!ft_strncmp(sect_tab[index].segname, SEG_TEXT, 16)
 		&& !ft_strncmp(sect_tab[index].sectname, SECT_TEXT, 16))
 		file->text_nb = file->sect_nb + index + 1;
@@ -84,12 +80,9 @@ int8_t		segment_parse_32(t_file_data *file, int32_t offset)
 			sizeof(*sect_tab) * nsects) == FALSE)
 		return (print_corrupted_file_error(file));
 	sect_tab = (struct section*)(file->content + offset);
-	i = 0;
-	while (i < nsects)
-	{
+	i = -1;
+	while (++i < nsects)
 		section_actualize_32(file, sect_tab, i);
-		i++;
-	}
 	file->sect_nb += nsects;
 	return (SUCCESS);
 }

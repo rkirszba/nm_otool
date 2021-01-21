@@ -6,31 +6,39 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:27:57 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/20 17:55:43 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 16:31:03 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
+static char	*symbol_get_name_32(t_file_data *file, struct nlist *sym)
+{
+	char		*name;
+	uint32_t	n_strx;
+	uint32_t	n;
+
+	n_strx = endian_wrap_u32(sym->n_un.n_strx, file->endian);
+	if (n_strx == 0)
+		return (ft_strdup(""));
+	if (n_strx > file->str_size)
+		return (ft_strdup(BAD_STR_INDEX));
+	name = file->sym_str + n_strx;
+	if (is_inside_file_abs(file->content, file->size, (void*)name) == FALSE)
+		return (ft_strdup(BAD_STR_INDEX));
+	n = distance_to_eof(file->content, file->size, (void*)name);
+	return (ft_strndup(name, n -1));
+}
+
 static int8_t	symbol_get_32(t_file_data *file, struct nlist *sym)
 {
 	t_symbol_data	*new_symbol;
-	char			*name;
-	uint32_t		n_strx;
 	int8_t			ret;
-	uint32_t		n;
 
-	n_strx = endian_wrap_u32(sym->n_un.n_strx, file->endian);
-	name = file->sym_str + n_strx;
-	// if (is_secure_str(file->content, file->size, name) == FALSE)
-	// 	return (print_corrupted_file_error(file));
-	if (is_inside_file_abs(file->content, file->size, (void*)name) == FALSE)
-		return (print_corrupted_file_error(file));
 	if (!(new_symbol = (t_symbol_data*)malloc(sizeof(*new_symbol))))
 		return (print_malloc_error());
 	ft_bzero(new_symbol, sizeof(*new_symbol));
-	n = distance_to_eof(file->content, file->size, (void*)name);
-	if (!(new_symbol->name = ft_strndup(((n_strx) ? name : ""), n - 1)))
+	if (!(new_symbol->name = symbol_get_name_32(file, sym)))
 	{
 		free(new_symbol);
 		return (print_malloc_error());
@@ -54,23 +62,23 @@ static int8_t	symbols_get_32(t_file_data *file)
 	uint32_t				nsyms;
 	uint32_t				symoff;
 
-	if (is_inside_file_rel(file->size, file->off_symcmd, sizeof(*sym_cmd)) == FALSE)
+	if (is_inside_file_rel(file->size, file->off_symcmd,
+			sizeof(*sym_cmd)) == FALSE)
 		return (print_corrupted_file_error(file));
 	sym_cmd = (struct symtab_command*)(file->content + file->off_symcmd);
 	nsyms = endian_wrap_u32(sym_cmd->nsyms, file->endian);
 	symoff = endian_wrap_u32(sym_cmd->symoff, file->endian) + file->off_header;
-	if (is_inside_file_rel(file->size, symoff, sizeof(*sym_tab) * nsyms) == FALSE)
+	if (is_inside_file_rel(file->size, symoff,
+			sizeof(*sym_tab) * nsyms) == FALSE)
 		return (print_corrupted_file_error(file));
 	sym_tab = (struct nlist*)(file->content + symoff);
 	file->sym_str = (char*)file->content
 		+ endian_wrap_u32(sym_cmd->stroff, file->endian) + file->off_header;
-	i = 0;
-	while (i < nsyms)
-	{
+	file->str_size = endian_wrap_u32(sym_cmd->strsize, file->endian);
+	i = -1;
+	while (++i < nsyms)
 		if (symbol_get_32(file, &sym_tab[i]))
 			return (ERROR);
-		i++;
-	}
 	return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 16:16:50 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/19 17:35:40 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/21 17:31:30 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,6 @@ SRCS_DIR_OT		= srcs_otool/
 SRCS_NAMES_NM	= ft_nm.c\
 				  static_var.c\
 				  args_parser.c\
-				  files_process.c\
 				  handle_32.c\
 				  handle_64.c\
 				  handle_fat.c\
@@ -42,10 +41,12 @@ SRCS_NAMES_NM	= ft_nm.c\
 				  symbols_get_utils.c\
 				  symbols_sort_functions.c\
 				  symbols_print.c\
+				  symbols_print_utils.c\
 				  architectures.c\
 				  endian_wrapper.c\
-				  errors.c
-			#	  free_functions.c\
+				  free_functions.c\
+				  errors_bad_file.c\
+				  errors_various.c
 
 SRCS_NAMES_OT	= ft_otool.c
 

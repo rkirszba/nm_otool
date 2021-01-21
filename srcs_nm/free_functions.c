@@ -6,11 +6,11 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 17:16:49 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/16 18:18:09 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 16:55:23 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.c"
+#include "ft_nm.h"
 
 void	free_file_data(void *data)
 {

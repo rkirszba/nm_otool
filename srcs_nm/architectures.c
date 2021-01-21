@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:50:46 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 20:02:40 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 14:22:09 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ char	*get_file_arch_64(struct fat_arch_64 *arch, t_endian endian)
 	cpu_subtype_t	cpu_subtype;
 
 	i = 0;
-	//voir si utilisation de masques binaires
 	cpu_type = endian_wrap_u32(arch->cputype, endian);
 	cpu_subtype = endian_wrap_u32(arch->cpusubtype, endian);
 	while (g_archs[i].cpu_type)

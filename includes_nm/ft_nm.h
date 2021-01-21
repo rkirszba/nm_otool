@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/20 17:18:48 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 16:46:24 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@
 # include <mach-o/nlist.h>
 # include <mach-o/fat.h>
 # include "libft.h"
-
-
-//a retirer
-# include <stdio.h>
-
 
 /*
 ** Basics
@@ -55,6 +50,11 @@
 # define SECT_DATA			"__data"
 # define SECT_BSS			"__bss"
 
+/*
+** Others
+*/
+
+# define BAD_STR_INDEX		"bad string index"
 
 # define DEFAULT_FILE		"a.out"
 # define OPTIONS			"gjnopruU"
@@ -63,6 +63,7 @@
 
 # define NB_MAGICS			8
 # define NB_HANDLERS		4
+
 
 typedef enum	e_bits
 {
@@ -122,6 +123,7 @@ typedef struct	s_file_data
 	uint8_t		data_nb;
 	uint8_t		bss_nb;
 	char		*sym_str;
+	uint32_t	str_size;
 	t_btree		*symbols;
 }				t_file_data;
 
@@ -153,7 +155,7 @@ typedef struct	s_error
 ** Main
 */
 
-int				main(int ac, char **av);
+// int				main(int ac, char **av);
 
 /*
 ** Static variables
@@ -171,10 +173,9 @@ int8_t			get_options(int ac, char **av, int *arg_offset);
 int8_t			get_files(t_list **list, int ac, char **av, int arg_offset);
 
 /*
-** Files processing routine
+** Handlers dispatcher
 */
 
-int8_t			files_process(t_list *files);
 int8_t			dispatcher(t_file_data *file);
 
 /*
@@ -215,7 +216,10 @@ int				symbol_no_sort(void *curs_data, void *node_data);
 */
 
 void			symbols_print(t_file_data *file);
+void			print_value(t_symbol_data *symbol, t_bits arch);
 void			print_hex(uint64_t nb, uint32_t width);
+void			print_type(t_symbol_data *symbol);
+void			print_indirect(t_symbol_data *symbol);
 
 /*
 ** Security checks
@@ -230,7 +234,6 @@ uint32_t		distance_to_eof(void *addr1, int32_t size, void *addr2);
 ** Endian wrappers
 */
 
-int32_t			endian_wrap_32(int32_t nb, t_endian endian);
 uint32_t		endian_wrap_u32(uint32_t nb, t_endian endian);
 uint64_t		endian_wrap_u64(uint64_t nb, t_endian endian);
 
@@ -258,6 +261,5 @@ int8_t			print_corrupted_file_error(t_file_data *file);
 
 void			free_file_data(void *data);
 void			free_symbol_data(void *data);
-
 
 #endif

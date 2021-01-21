@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 19:14:43 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/19 18:41:27 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/21 12:45:33 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,16 @@ int		symbol_alpha_sort(void *curs_data, void *node_data)
 	t_symbol_data	*curs;
 	t_symbol_data	*node;
 	int				cmp;
+	int64_t			diff;
 
 	curs = (t_symbol_data*)curs_data;
 	node = (t_symbol_data*)node_data;
 	cmp = ft_strcmp(curs->name, node->name);
 	if (!cmp)
-		return (curs->value - node->value);
+	{
+		diff = curs->value - node->value;
+		return (diff > 0 ? 1 : -1);
+	}
 	return (cmp);
 }
 
@@ -37,7 +41,7 @@ int		symbol_num_sort(void *curs_data, void *node_data)
 {
 	t_symbol_data	*curs;
 	t_symbol_data	*node;
-	int32_t			diff;
+	int64_t			diff;
 
 	curs = (t_symbol_data*)curs_data;
 	node = (t_symbol_data*)node_data;
