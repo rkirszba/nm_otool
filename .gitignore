@@ -8,3 +8,4 @@ dev_tests
 a.out
 fat
 binary
+check_segv
