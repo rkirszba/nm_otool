@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:57:56 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 17:15:52 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 20:11:45 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int8_t	section_parse_64(t_file_data *file, struct section_64 *sect_tab,
 	{
 		file->off_text = endian_wrap_u32(sect_tab[index].offset, file->endian)
 		+ file->off_header;
-		file->size_text = endian_wrap_u64(sect_tab[index].size, file->endian);
+		file->addr_text = endian_wrap_u64(sect_tab[index].addr, file->endian);
 		file->size_text = endian_wrap_u64(sect_tab[index].size, file->endian); //!!u32 pour parse_32
 		if (is_inside_file_rel(file->size, file->off_text, file->size_text)
 			== FALSE)
@@ -32,7 +32,7 @@ static int8_t	section_parse_64(t_file_data *file, struct section_64 *sect_tab,
 	{
 		file->off_data = endian_wrap_u32(sect_tab[index].offset, file->endian)
 		+ file->off_header;
-		file->size_text = endian_wrap_u64(sect_tab[index].size, file->endian);
+		file->addr_data = endian_wrap_u64(sect_tab[index].addr, file->endian);
 		file->size_data = endian_wrap_u64(sect_tab[index].size, file->endian); //!!u32 pour parse_32
 		if (is_inside_file_rel(file->size, file->off_data, file->size_data)
 			== FALSE)
@@ -59,7 +59,8 @@ static int8_t	segment_parse_64(t_file_data *file, uint64_t offset)
 	sect_tab = (struct section_64*)(file->content + offset);
 	i = -1;
 	while (++i < nsects)
-		section_parse_64(file, sect_tab, i);
+		if (section_parse_64(file, sect_tab, i) == ERROR)
+			return (ERROR);
 	return (SUCCESS);
 }
 

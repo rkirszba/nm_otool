@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 19:29:11 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 15:45:51 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 19:55:46 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int8_t	print_malloc_error(void)
 {
-	ft_putstr_fd("nm: malloc failed\n", 2);
+	ft_putstr_fd("ft_nm: malloc failed\n", 2);
 	return (MALLOC_ERROR);
 }
 
 int8_t	print_munmap_error(void)
 {
-	ft_putstr_fd("nm: munmap failed\n", 2);
+	ft_putstr_fd("ft_nm: munmap failed\n", 2);
 	return (MALLOC_ERROR);
 }
 

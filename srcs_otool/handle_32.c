@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:49:45 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 17:15:16 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 20:11:10 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static int8_t	segment_parse_32(t_file_data *file, uint64_t offset)
 	sect_tab = (struct section*)(file->content + offset);
 	i = -1;
 	while (++i < nsects)
-		section_parse_32(file, sect_tab, i);
+		if (section_parse_32(file, sect_tab, i) == ERROR)
+			return (ERROR);
 	return (SUCCESS);
 }
 

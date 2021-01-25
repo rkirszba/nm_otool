@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 16:16:50 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/25 17:03:15 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/25 18:48:18 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,10 @@ SRCS_NAMES_OT	= ft_otool.c\
 				  args_parser.c\
 				  handle_32.c\
 				  handle_64.c\
+				  handle_fat.c\
 				  security.c\
 				  sections_print.c\
+				  architectures.c\
 				  endian_wrapper.c\
 				  errors_bad_file.c\
 				  errors_various.c

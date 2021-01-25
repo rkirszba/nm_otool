@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:21:52 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 17:15:21 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 18:48:58 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ typedef enum	e_endian
 	big		= 1 
 }				t_endian;
 
+typedef struct	s_arch
+{
+	char			*str;
+	cpu_type_t		cpu_type;
+	cpu_subtype_t	cpu_subtype;
+}				t_arch;
+
 typedef struct	s_options
 {
 	uint8_t	d;
@@ -138,8 +145,8 @@ int8_t			dispatcher(t_file_data *file);
 
 int8_t			handle_mh_32(t_file_data *file);
 int8_t			handle_mh_64(t_file_data *file);
-// int8_t			handle_fat_32(t_file_data *file);
-// int8_t			handle_fat_64(t_file_data *file);
+int8_t			handle_fat_32(t_file_data *file);
+int8_t			handle_fat_64(t_file_data *file);
 
 /*
 ** Print functions
@@ -161,6 +168,13 @@ int8_t			is_inside_file_abs(void* addr1, uint64_t size, void* addr2);
 
 uint32_t		endian_wrap_u32(uint32_t nb, t_endian endian);
 uint64_t		endian_wrap_u64(uint64_t nb, t_endian endian);
+
+/*
+** Architectures
+*/
+
+char			*get_file_arch_32(struct fat_arch *arch, t_endian endian);
+char			*get_file_arch_64(struct fat_arch_64 *arch, t_endian endian);
 
 /*
 ** Error functions

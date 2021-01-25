@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 17:11:57 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/21 17:12:38 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 19:56:31 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int8_t	print_loading_file_error(char *file_name)
 	int	err;
 
 	err = errno;
-	ft_putstr_fd("nm: error: ", 2);
+	ft_putstr_fd("ft_nm: error: ", 2);
 	ft_putstr_fd(file_name, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(get_error(err), 2);
@@ -45,7 +45,7 @@ int8_t	print_loading_file_error(char *file_name)
 
 int8_t	print_invalid_file_error(t_file_data *file)
 {
-	ft_putstr_fd("nm: error: ", 2);
+	ft_putstr_fd("ft_nm: error: ", 2);
 	ft_putstr_fd(file->name, 2);
 	if (file->arch)
 	{
@@ -59,7 +59,7 @@ int8_t	print_invalid_file_error(t_file_data *file)
 
 int8_t	print_corrupted_file_error(t_file_data *file)
 {
-	ft_putstr_fd("nm: error: ", 2);
+	ft_putstr_fd("ft_nm: error: ", 2);
 	ft_putstr_fd(file->name, 2);
 	if (file->arch)
 	{

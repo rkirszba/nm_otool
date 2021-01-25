@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:28:18 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 17:03:04 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 18:57:30 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,29 @@ static int8_t	files_process(t_list *files)
 
 int8_t			dispatcher(t_file_data *file)
 {
-	// static int8_t (*tab[NB_HANDLERS])(t_file_data *) = {
-	// 	&handle_mh_32,
-	// 	&handle_mh_64,
-	// 	&handle_fat_32,
-	// 	&handle_fat_64
-	// };
-	// uint32_t			*magics_tab;
-	// uint32_t			magic;
-	// int					i;
+	static int8_t (*tab[NB_HANDLERS])(t_file_data *) = {
+		&handle_mh_32,
+		&handle_mh_64,
+		&handle_fat_32,
+		&handle_fat_64
+	};
+	uint32_t			*magics_tab;
+	uint32_t			magic;
+	int					i;
 
-	// if (is_inside_file_rel(file->size, file->off_header,
-	// 		sizeof(uint32_t)) == FALSE)
-	// 	return (print_invalid_file_error(file));
-	// magic = *(uint32_t*)(file->content + file->off_header);
-	// magics_tab = static_magics();
-	// i = -1;
-	// while (++i < (file->fat ? NB_MAGICS / 2 : NB_MAGICS))
-	// 	if (magics_tab[i] == magic)
-	// 		break ;
-	// if (i == (file->fat ? NB_MAGICS / 2 : NB_MAGICS))
-	// 	return (print_invalid_file_error(file));
-	// file->endian = i % 2;
-	// return (tab[i / 2](file));
+	if (is_inside_file_rel(file->size, file->off_header,
+			sizeof(uint32_t)) == FALSE)
+		return (print_invalid_file_error(file));
+	magic = *(uint32_t*)(file->content + file->off_header);
+	magics_tab = static_magics();
+	i = -1;
+	while (++i < (file->fat ? NB_MAGICS / 2 : NB_MAGICS))
+		if (magics_tab[i] == magic)
+			break ;
+	if (i == (file->fat ? NB_MAGICS / 2 : NB_MAGICS))
+		return (print_invalid_file_error(file));
+	file->endian = i % 2;
+	return (tab[i / 2](file));
 	return (handle_mh_32(file));
 }
 

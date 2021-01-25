@@ -5,25 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/19 17:26:55 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 17:25:16 by rkirszba         ###   ########.fr       */
+/*   Created: 2021/01/25 18:02:08 by rkirszba          #+#    #+#             */
+/*   Updated: 2021/01/25 18:47:45 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_nm.h"
+#include "ft_otool.h"
 
 void			file_reinit(t_file_data *file)
 {
-	file->off_symcmd = 0;
-	file->sect_nb = 0;
-	file->text_nb = 0;
-	file->data_nb = 0;
-	file->bss_nb = 0;
-	file->sym_str = NULL;
-	file->symbols = NULL;
+	file->off_text = 0;
+	file->size_text = 0;
+	file->addr_text = 0;
+	file->off_data = 0;
+	file->size_data = 0;
+	file->addr_data = 0;
 }
 
-int8_t			handle_multi_arch_64(t_file_data *file, struct fat_arch_64 *arch,
+static int8_t	handle_multi_arch_64(t_file_data *file, struct fat_arch_64 *arch,
 				uint32_t nfat_arch)
 {
 	t_endian	endian;
@@ -81,7 +80,7 @@ int8_t			handle_fat_64(t_file_data *file)
 	return (handle_multi_arch_64(file, arch, nfat_arch));
 }
 
-int8_t			handle_multi_arch_32(t_file_data *file, struct fat_arch *arch,
+static int8_t	handle_multi_arch_32(t_file_data *file, struct fat_arch *arch,
 				uint32_t nfat_arch)
 {
 	t_endian	endian;

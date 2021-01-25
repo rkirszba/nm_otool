@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 15:42:31 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 15:52:44 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 19:55:31 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int8_t	print_malloc_error(void)
 {
-	ft_putstr_fd("nm: malloc failed\n", 2);
+	ft_putstr_fd("ft_otool: malloc failed\n", 2);
 	return (MALLOC_ERROR);
 }
 
 int8_t	print_munmap_error(void)
 {
-	ft_putstr_fd("nm: munmap failed\n", 2);
+	ft_putstr_fd("ft_otool: munmap failed\n", 2);
 	return (MALLOC_ERROR);
 }
 
@@ -36,7 +36,7 @@ int8_t	print_options_error(char wrong_option, char *flag)
 
 int8_t	print_usage(void)
 {
-	ft_putstr_fd("Usage: ft_otool [-dt] <object file> ...\n", 2);
+	ft_putstr_fd("Usage: ./ft_otool [-dt] <object file> ...\n", 2);
 	ft_putstr_fd("        -d print the data section\n", 2);
 	ft_putstr_fd("        -t print the text section\n", 2);
 	return (ERROR);

@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 15:57:40 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 17:17:44 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 20:12:24 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,11 @@ static void	print_hex(uint64_t nb, uint32_t width)
 	write(1, &HEX_BASE[nb % 16], 1);
 }
 
-//peut etre qu'il faudra ajouter size_header
-static void	bytes_print(uint8_t *content, uint64_t addr, uint64_t offset,
-		uint64_t size, t_bits bits)
+static void	bytes_print(t_file_data *file, uint64_t addr, uint64_t offset,
+			uint64_t size)
 {
 	uint64_t	i;
 
-	if (offset == 0)
-		return ;
 	i = -1;
 	while (++i < size)
 	{
@@ -35,31 +32,37 @@ static void	bytes_print(uint8_t *content, uint64_t addr, uint64_t offset,
 		{
 			if (i != 0)
 				ft_putstr("\n");
-			print_hex(addr + i, (bits == bits64) ? 16 : 8);
+			print_hex(addr + i, (file->bits == bits64) ? 16 : 8);
 			ft_putstr("\t");
 		}
-		print_hex(*(content + offset + i), 2);
-		ft_putstr(" ");
+		print_hex(*(file->content + offset + i), 2);
+		if (file->endian == little || (i + 1) % 4 == 0)
+			ft_putstr(" ");
 	}
 	ft_putstr("\n");
 }
 
-void	sections_print(t_file_data *file)
+void		sections_print(t_file_data *file)
 {
 	t_options	*options;
 
 	options = static_options();
-	// voir avec differentes archis
 	ft_putstr(file->name);
+	if (file->fat == TRUE && file->arch)
+	{
+		ft_putstr(" (architecture ");
+		ft_putstr(file->arch);
+		ft_putstr(")");
+	}
 	write(1, ":\n", 2);
-	if (options->t)
+	if (options->t && file->off_text)
 	{
 		ft_putstr("Contents of (__TEXT,__text) section\n");
-		bytes_print(file->content, file->addr_text, file->off_text, file->size_text, file->bits);
+		bytes_print(file, file->addr_text, file->off_text, file->size_text);
 	}
-	if (options->d)
+	if (options->d && file->off_data)
 	{
 		ft_putstr("Contents of (__DATA,__data) section\n");
-		bytes_print(file->content, file->addr_data, file->off_data, file->size_data, file->bits);
+		bytes_print(file, file->addr_data, file->off_data, file->size_data);
 	}
 }
