@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 15:57:40 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 16:34:22 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 17:17:44 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	print_hex(uint64_t nb, uint32_t width)
 }
 
 //peut etre qu'il faudra ajouter size_header
-static void	bytes_print(uint8_t *content, uint64_t offset,
+static void	bytes_print(uint8_t *content, uint64_t addr, uint64_t offset,
 		uint64_t size, t_bits bits)
 {
 	uint64_t	i;
@@ -35,7 +35,7 @@ static void	bytes_print(uint8_t *content, uint64_t offset,
 		{
 			if (i != 0)
 				ft_putstr("\n");
-			print_hex(offset + i, (bits == bits64) ? 16 : 8);
+			print_hex(addr + i, (bits == bits64) ? 16 : 8);
 			ft_putstr("\t");
 		}
 		print_hex(*(content + offset + i), 2);
@@ -55,11 +55,11 @@ void	sections_print(t_file_data *file)
 	if (options->t)
 	{
 		ft_putstr("Contents of (__TEXT,__text) section\n");
-		bytes_print(file->content, file->off_text, file->size_text, file->bits);
+		bytes_print(file->content, file->addr_text, file->off_text, file->size_text, file->bits);
 	}
 	if (options->d)
 	{
 		ft_putstr("Contents of (__DATA,__data) section\n");
-		bytes_print(file->content, file->off_data, file->size_data, file->bits);
+		bytes_print(file->content, file->addr_data, file->off_data, file->size_data, file->bits);
 	}
 }

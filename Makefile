@@ -6,7 +6,7 @@
 #    By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/12 16:16:50 by rkirszba          #+#    #+#              #
-#    Updated: 2021/01/25 16:23:03 by rkirszba         ###   ########.fr        #
+#    Updated: 2021/01/25 17:03:15 by rkirszba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRCS_NAMES_NM	= ft_nm.c\
 SRCS_NAMES_OT	= ft_otool.c\
 				  static_var.c\
 				  args_parser.c\
+				  handle_32.c\
 				  handle_64.c\
 				  security.c\
 				  sections_print.c\

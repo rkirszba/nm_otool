@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:28:18 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 15:38:33 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 17:03:04 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int8_t			dispatcher(t_file_data *file)
 	// 	return (print_invalid_file_error(file));
 	// file->endian = i % 2;
 	// return (tab[i / 2](file));
-	return (handle_mh_64(file));
+	return (handle_mh_32(file));
 }
 
 int		main(int ac, char **av)

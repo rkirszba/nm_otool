@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_64.c                                        :+:      :+:    :+:   */
+/*   handle_32.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 14:57:56 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 17:15:52 by rkirszba         ###   ########.fr       */
+/*   Created: 2021/01/25 16:49:45 by rkirszba          #+#    #+#             */
+/*   Updated: 2021/01/25 17:15:16 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
 
-static int8_t	section_parse_64(t_file_data *file, struct section_64 *sect_tab,
+static int8_t	section_parse_32(t_file_data *file, struct section *sect_tab,
 				uint32_t index)
 {
 	// peut etre qu'il faudra ajouter file->off_header
@@ -21,8 +21,8 @@ static int8_t	section_parse_64(t_file_data *file, struct section_64 *sect_tab,
 	{
 		file->off_text = endian_wrap_u32(sect_tab[index].offset, file->endian)
 		+ file->off_header;
-		file->size_text = endian_wrap_u64(sect_tab[index].size, file->endian);
-		file->size_text = endian_wrap_u64(sect_tab[index].size, file->endian); //!!u32 pour parse_32
+		file->addr_text = endian_wrap_u32(sect_tab[index].addr, file->endian);
+		file->size_text = endian_wrap_u32(sect_tab[index].size, file->endian);
 		if (is_inside_file_rel(file->size, file->off_text, file->size_text)
 			== FALSE)
 			return (print_corrupted_file_error(file));
@@ -32,8 +32,8 @@ static int8_t	section_parse_64(t_file_data *file, struct section_64 *sect_tab,
 	{
 		file->off_data = endian_wrap_u32(sect_tab[index].offset, file->endian)
 		+ file->off_header;
-		file->size_text = endian_wrap_u64(sect_tab[index].size, file->endian);
-		file->size_data = endian_wrap_u64(sect_tab[index].size, file->endian); //!!u32 pour parse_32
+		file->addr_data = endian_wrap_u32(sect_tab[index].addr, file->endian);
+		file->size_data = endian_wrap_u32(sect_tab[index].size, file->endian);
 		if (is_inside_file_rel(file->size, file->off_data, file->size_data)
 			== FALSE)
 			return (print_corrupted_file_error(file));
@@ -41,29 +41,29 @@ static int8_t	section_parse_64(t_file_data *file, struct section_64 *sect_tab,
 	return (SUCCESS);
 }	
 
-static int8_t	segment_parse_64(t_file_data *file, uint64_t offset)
+static int8_t	segment_parse_32(t_file_data *file, uint64_t offset)
 {
-	struct segment_command_64	*seg_cmd;
-	struct section_64			*sect_tab;
-	uint32_t					i;
-	uint32_t					nsects;
+	struct segment_command	*seg_cmd;
+	struct section			*sect_tab;
+	uint32_t				i;
+	uint32_t				nsects;
 
 	if (is_inside_file_rel(file->size, offset, sizeof(*seg_cmd)) == FALSE)
 		return (print_corrupted_file_error(file));
-	seg_cmd = (struct segment_command_64*)(file->content + offset);
+	seg_cmd = (struct segment_command*)(file->content + offset);
 	offset += sizeof(*seg_cmd);
 	nsects = endian_wrap_u32(seg_cmd->nsects, file->endian);
 	if (is_inside_file_rel(file->size, offset,
 			sizeof(*sect_tab) * nsects) == FALSE)
 		return (print_corrupted_file_error(file));
-	sect_tab = (struct section_64*)(file->content + offset);
+	sect_tab = (struct section*)(file->content + offset);
 	i = -1;
 	while (++i < nsects)
-		section_parse_64(file, sect_tab, i);
+		section_parse_32(file, sect_tab, i);
 	return (SUCCESS);
 }
 
-static int8_t	load_commands_parse_64(t_file_data *file, uint32_t ncmds)
+static int8_t	load_commands_parse_32(t_file_data *file, uint32_t ncmds)
 {
 	uint32_t			i;
 	uint64_t			offset;
@@ -71,15 +71,15 @@ static int8_t	load_commands_parse_64(t_file_data *file, uint32_t ncmds)
 	uint32_t			cmd;	
 	
 	i = 0;
-	offset = file->off_header + sizeof(struct mach_header_64);
+	offset = file->off_header + sizeof(struct mach_header);
 	while (i < ncmds)
 	{
 		if (is_inside_file_rel(file->size, offset, sizeof(*lc)) == FALSE)
 			return (print_corrupted_file_error(file));
 		lc = (struct load_command*)(file->content + offset);
 		cmd = endian_wrap_u32(lc->cmd, file->endian);
-		if (cmd == LC_SEGMENT_64)
-			if (segment_parse_64(file, offset) == ERROR)
+		if (cmd == LC_SEGMENT)
+			if (segment_parse_32(file, offset) == ERROR)
 				return (ERROR);
 		offset += endian_wrap_u32(lc->cmdsize, file->endian);
 		i++;
@@ -87,17 +87,17 @@ static int8_t	load_commands_parse_64(t_file_data *file, uint32_t ncmds)
 	return (SUCCESS);
 }
 
-int8_t			handle_mh_64(t_file_data *file)
+int8_t			handle_mh_32(t_file_data *file)
 {
-	struct mach_header_64	*header;
+	struct mach_header	*header;
 	int8_t					ret;
 
-	file->bits = bits64;
+	file->bits = bits32;
 	if (is_inside_file_rel(file->size, file->off_header, sizeof(*header))
 		== FALSE)
 		return (print_corrupted_file_error(file));
-	header = (struct mach_header_64 *)(file->content + file->off_header);
-	ret = load_commands_parse_64(file,
+	header = (struct mach_header *)(file->content + file->off_header);
+	ret = load_commands_parse_32(file,
 		endian_wrap_u32(header->ncmds, file->endian));
 	if (ret == SUCCESS)
 		sections_print(file);

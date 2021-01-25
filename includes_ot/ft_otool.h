@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:21:52 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 16:27:20 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 17:15:21 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,10 @@ typedef struct	s_file_data
 	uint64_t	off_header;
 	uint64_t	off_text;
 	uint64_t	size_text;
+	uint64_t	addr_text;
 	uint64_t	off_data;
 	uint64_t	size_data;
+	uint64_t	addr_data;
 }				t_file_data;
 
 typedef struct	s_error
@@ -134,7 +136,7 @@ int8_t			dispatcher(t_file_data *file);
 ** Handlers
 */
 
-// int8_t			handle_mh_32(t_file_data *file);
+int8_t			handle_mh_32(t_file_data *file);
 int8_t			handle_mh_64(t_file_data *file);
 // int8_t			handle_fat_32(t_file_data *file);
 // int8_t			handle_fat_64(t_file_data *file);
