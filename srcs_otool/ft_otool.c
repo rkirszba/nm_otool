@@ -6,11 +6,17 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:28:18 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 18:57:30 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 20:18:28 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_otool.h"
+
+void			free_file_data(void *data)
+{
+	free(((t_file_data*)data)->name);
+	free(data);
+}
 
 static int8_t	file_loading_routine(t_file_data *file)
 {
@@ -106,6 +112,6 @@ int		main(int ac, char **av)
 	if (get_files(&files, ac, av, arg_offset) == MALLOC_ERROR)
 		return (EXIT_FAILURE);
 	ret = files_process(files);
-	// ft_list_free(files, &free_file_data);
+	ft_list_free(files, &free_file_data);
 	return ((int)ret);
 }
