@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/21 16:46:24 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 16:11:18 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ typedef struct	s_arch
 
 typedef struct	s_options
 {
-	u_int8_t	multi_input;
-	u_int8_t	g;
-	u_int8_t	j;
-	u_int8_t	n;
-	u_int8_t	o;
-	u_int8_t	p;
-	u_int8_t	r;
-	u_int8_t	u;
-	u_int8_t	U;
+	uint8_t	multi_input;
+	uint8_t	g;
+	uint8_t	j;
+	uint8_t	n;
+	uint8_t	o;
+	uint8_t	p;
+	uint8_t	r;
+	uint8_t	u;
+	uint8_t	U;
 }				t_options;
 
 typedef struct	s_file_data
@@ -137,13 +137,6 @@ typedef struct	s_symbol_data
 	t_section	sect;
 }				t_symbol_data;
 
-
-typedef struct	s_dispatcher
-{
-	uint32_t	magic;
-	int8_t		(*fun)(t_file_data*);
-}				t_dispatcher;
-
 typedef struct	s_error
 {
 	int			nb;
@@ -155,7 +148,7 @@ typedef struct	s_error
 ** Main
 */
 
-// int				main(int ac, char **av);
+int				main(int ac, char **av);
 
 /*
 ** Static variables

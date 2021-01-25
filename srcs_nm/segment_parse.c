@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 15:55:09 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/21 16:35:35 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 15:24:55 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int8_t		segment_parse_64(t_file_data *file, int32_t offset)
 	i = -1;
 	while (++i < nsects)
 		section_actualize_64(file, sect_tab, i);
-		i++;
 	file->sect_nb += nsects;
 	return (SUCCESS);
 }

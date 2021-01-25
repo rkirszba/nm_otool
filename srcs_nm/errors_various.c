@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 19:29:11 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/21 17:15:57 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/25 15:45:51 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int8_t	print_munmap_error(void)
 
 int8_t	print_options_error(char wrong_option)
 {
-	ft_putstr_fd("nm: Unknown command line argument '-", 2);
+	ft_putstr_fd("ft_nm: Unknown command line argument '-", 2);
 	write(2, &wrong_option, 1);
 	ft_putstr_fd("'.\n\n", 2);
 	ft_putstr_fd("USAGE: ./ft_nm [options] <input files>\n\n", 2);
