@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:32:05 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 16:28:25 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/26 20:34:17 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int8_t			get_options(int ac, char **av, int *arg_offset)
 	while (++(*arg_offset) < ac)
 	{
 		arg = av[*arg_offset];
-		if (arg[0] != '-')
+		if (arg[0] != '-' || !ft_strcmp(arg, "-"))
 			return (SUCCESS);
 		if (!ft_strcmp(arg, "--"))
 		{

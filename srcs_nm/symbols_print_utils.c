@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 16:41:17 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/21 17:06:21 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/26 19:39:59 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ void		print_value(t_symbol_data *symbol, t_bits arch)
 
 	value = symbol->value;
 	type = symbol->type;
-	if ((type == N_UNDF && value == 0)
-		|| (type == N_INDR && symbol->ext == TRUE)
+	if (((type == N_UNDF && value == 0)
+		|| type == N_INDR
 		|| type == N_PBUD)
+		&& symbol->ext == TRUE)
 	{
 		ft_putstr("        ");
 		if (arch == bits64)
@@ -61,12 +62,12 @@ void		print_type(t_symbol_data *symbol)
 	if (symbol->type == N_UNDF)
 	{
 		if (symbol->value == 0)
-			write(1, symbol->ext == TRUE ? "U" : "u", 1);
+			write(1, symbol->ext == TRUE ? "U" : "?", 1);
 		else
-			write(1, symbol->ext == TRUE ? "C" : "c", 1);
+			write(1, symbol->ext == TRUE ? "C" : "?", 1);
 	}
 	else if (symbol->type == N_PBUD)
-		write(1, symbol->ext == TRUE ? "U" : "u", 1);
+		write(1, symbol->ext == TRUE ? "U" : "?", 1);
 	else if (symbol->type == N_ABS)
 		write(1, symbol->ext == TRUE ? "A" : "a", 1);
 	else if (symbol->type == N_SECT)

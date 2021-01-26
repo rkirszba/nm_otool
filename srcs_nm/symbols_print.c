@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 11:30:48 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/26 15:09:49 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/26 19:50:11 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ static uint8_t	symbol_allow_print(t_options *options, t_symbol_data *symbol)
 {
 	if (symbol->debug)
 		return (FALSE);
-	if (options->u && (symbol->type != N_UNDF && symbol->type != N_PBUD))
+	if (options->u && ((symbol->type != N_UNDF && symbol->type != N_PBUD)
+		|| symbol->ext == FALSE))
 		return FALSE;
-	if (options->U && (symbol->type == N_UNDF || symbol->type == N_PBUD))
+	if (options->U && ((symbol->type == N_UNDF || symbol->type == N_PBUD)
+	 && symbol->ext == TRUE))
 		return FALSE;
 	if (options->g && symbol->ext == FALSE)
 		return FALSE;
