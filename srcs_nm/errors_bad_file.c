@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 17:11:57 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 19:56:31 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/26 10:22:18 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*get_error(int err)
 		{ENOENT, "No such file or directory"},
 		{EACCES, "Permission denied"},
 		{EINVAL, "Invalid argument"},
-		{ENOTDIR, "Not a directory"}
+		{EISDIR, "Is a directory"}
 	};
 	int				i;
 
