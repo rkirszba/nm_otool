@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:49:45 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 20:11:10 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 12:31:57 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int8_t	section_parse_32(t_file_data *file, struct section *sect_tab,
 				uint32_t index)
 {
-	// peut etre qu'il faudra ajouter file->off_header
 	if (!ft_strncmp(sect_tab[index].segname, SEG_TEXT, 16)
 		&& !ft_strncmp(sect_tab[index].sectname, SECT_TEXT, 16))
 	{
@@ -39,7 +38,7 @@ static int8_t	section_parse_32(t_file_data *file, struct section *sect_tab,
 			return (print_corrupted_file_error(file));
 	}
 	return (SUCCESS);
-}	
+}
 
 static int8_t	segment_parse_32(t_file_data *file, uint64_t offset)
 {
@@ -69,8 +68,8 @@ static int8_t	load_commands_parse_32(t_file_data *file, uint32_t ncmds)
 	uint32_t			i;
 	uint64_t			offset;
 	struct load_command	*lc;
-	uint32_t			cmd;	
-	
+	uint32_t			cmd;
+
 	i = 0;
 	offset = file->off_header + sizeof(struct mach_header);
 	while (i < ncmds)
@@ -91,7 +90,7 @@ static int8_t	load_commands_parse_32(t_file_data *file, uint32_t ncmds)
 int8_t			handle_mh_32(t_file_data *file)
 {
 	struct mach_header	*header;
-	int8_t					ret;
+	int8_t				ret;
 
 	file->bits = bits32;
 	if (is_inside_file_rel(file->size, file->off_header, sizeof(*header))

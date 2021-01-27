@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:57:56 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 20:11:45 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 12:33:51 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 static int8_t	section_parse_64(t_file_data *file, struct section_64 *sect_tab,
 				uint32_t index)
 {
-	// peut etre qu'il faudra ajouter file->off_header
 	if (!ft_strncmp(sect_tab[index].segname, SEG_TEXT, 16)
 		&& !ft_strncmp(sect_tab[index].sectname, SECT_TEXT, 16))
 	{
 		file->off_text = endian_wrap_u32(sect_tab[index].offset, file->endian)
 		+ file->off_header;
 		file->addr_text = endian_wrap_u64(sect_tab[index].addr, file->endian);
-		file->size_text = endian_wrap_u64(sect_tab[index].size, file->endian); //!!u32 pour parse_32
+		file->size_text = endian_wrap_u64(sect_tab[index].size, file->endian);
 		if (is_inside_file_rel(file->size, file->off_text, file->size_text)
 			== FALSE)
 			return (print_corrupted_file_error(file));
@@ -33,13 +32,13 @@ static int8_t	section_parse_64(t_file_data *file, struct section_64 *sect_tab,
 		file->off_data = endian_wrap_u32(sect_tab[index].offset, file->endian)
 		+ file->off_header;
 		file->addr_data = endian_wrap_u64(sect_tab[index].addr, file->endian);
-		file->size_data = endian_wrap_u64(sect_tab[index].size, file->endian); //!!u32 pour parse_32
+		file->size_data = endian_wrap_u64(sect_tab[index].size, file->endian);
 		if (is_inside_file_rel(file->size, file->off_data, file->size_data)
 			== FALSE)
 			return (print_corrupted_file_error(file));
 	}
 	return (SUCCESS);
-}	
+}
 
 static int8_t	segment_parse_64(t_file_data *file, uint64_t offset)
 {
@@ -69,8 +68,8 @@ static int8_t	load_commands_parse_64(t_file_data *file, uint32_t ncmds)
 	uint32_t			i;
 	uint64_t			offset;
 	struct load_command	*lc;
-	uint32_t			cmd;	
-	
+	uint32_t			cmd;
+
 	i = 0;
 	offset = file->off_header + sizeof(struct mach_header_64);
 	while (i < ncmds)

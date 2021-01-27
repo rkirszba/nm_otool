@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 15:41:51 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/26 10:22:04 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 12:29:30 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static char	*get_error(int err)
 {
-	static t_error	tab[NB_ERRORS] = 
-	{
+	static t_error	tab[NB_ERRORS] = {
 		{ENOENT, "No such file or directory"},
 		{EACCES, "Permission denied"},
 		{EINVAL, "Invalid argument"},
@@ -30,7 +29,7 @@ static char	*get_error(int err)
 	return ("Unknown reason");
 }
 
-int8_t	print_loading_file_error(char *file_name)
+int8_t		print_loading_file_error(char *file_name)
 {
 	int	err;
 
@@ -43,7 +42,7 @@ int8_t	print_loading_file_error(char *file_name)
 	return (ERROR);
 }
 
-int8_t	print_invalid_file_error(t_file_data *file)
+int8_t		print_invalid_file_error(t_file_data *file)
 {
 	ft_putstr_fd("ft_otool: error: ", 2);
 	ft_putstr_fd(file->name, 2);
@@ -57,7 +56,7 @@ int8_t	print_invalid_file_error(t_file_data *file)
 	return (ERROR);
 }
 
-int8_t	print_corrupted_file_error(t_file_data *file)
+int8_t		print_corrupted_file_error(t_file_data *file)
 {
 	ft_putstr_fd("ft_otool: error: ", 2);
 	ft_putstr_fd(file->name, 2);

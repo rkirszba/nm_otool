@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 12:21:52 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/25 18:48:58 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 12:42:40 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 /*
 ** Basics
-*/	
+*/
 
 # define ERROR				1
 # define SUCCESS			0
@@ -61,7 +61,6 @@
 # define NB_MAGICS			8
 # define NB_HANDLERS		4
 
-
 typedef enum	e_bits
 {
 	bits32,
@@ -70,8 +69,8 @@ typedef enum	e_bits
 
 typedef enum	e_endian
 {
-	little	= 0,
-	big		= 1 
+	little = 0,
+	big = 1
 }				t_endian;
 
 typedef struct	s_arch
@@ -160,7 +159,7 @@ void			sections_print(t_file_data *file);
 
 int8_t			is_inside_file_rel(uint64_t size, uint64_t offset,
 				uint64_t to_read);
-int8_t			is_inside_file_abs(void* addr1, uint64_t size, void* addr2);		
+int8_t			is_inside_file_abs(void *addr1, uint64_t size, void *addr2);
 
 /*
 ** Endian wrappers

@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 14:32:05 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/26 20:34:17 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 12:28:40 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_list	*create_new_file_node(char *file_name)
 	data->name = name_dup;
 	if (!(new = ft_list_new((void*)data)))
 	{
-		// free_file_data(data);
+		free_file_data(data);
 		print_malloc_error();
 		return (NULL);
 	}
