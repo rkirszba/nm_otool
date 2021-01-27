@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:27:04 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/21 16:55:17 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 11:34:56 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static int8_t	file_loading_routine(t_file_data *file)
 	}
 	file->size = (int32_t)(file_stats.st_size);
 	if ((file->content = (uint8_t*)mmap(NULL, file->size, PROT_READ,
-			MAP_PRIVATE, fd, 0) ) == MAP_FAILED)
+			MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 	{
 		close(fd);
 		return (print_loading_file_error(file->name));
 	}
-	close (fd);
+	close(fd);
 	return (SUCCESS);
 }
 
@@ -62,15 +62,15 @@ static int8_t	files_process(t_list *files)
 
 int8_t			dispatcher(t_file_data *file)
 {
-	static int8_t (*tab[NB_HANDLERS])(t_file_data *) = {
+	static int8_t	(*tab[NB_HANDLERS])(t_file_data *) = {
 		&handle_mh_32,
 		&handle_mh_64,
 		&handle_fat_32,
 		&handle_fat_64
 	};
-	uint32_t			*magics_tab;
-	uint32_t			magic;
-	int					i;
+	uint32_t		*magics_tab;
+	uint32_t		magic;
+	int				i;
 
 	if (is_inside_file_rel(file->size, file->off_header,
 			sizeof(uint32_t)) == FALSE)

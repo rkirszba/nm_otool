@@ -6,13 +6,13 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 15:30:53 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/21 16:31:57 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 11:37:21 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_nm.h"
 
-static char	*symbol_get_name_64(t_file_data *file, struct nlist_64 *sym)
+static char		*symbol_get_name_64(t_file_data *file, struct nlist_64 *sym)
 {
 	char		*name;
 	uint32_t	n_strx;
@@ -27,7 +27,7 @@ static char	*symbol_get_name_64(t_file_data *file, struct nlist_64 *sym)
 	if (is_inside_file_abs(file->content, file->size, (void*)name) == FALSE)
 		return (ft_strdup(BAD_STR_INDEX));
 	n = distance_to_eof(file->content, file->size, (void*)name);
-	return (ft_strndup(name, n -1));
+	return (ft_strndup(name, n - 1));
 }
 
 static int8_t	symbol_get_64(t_file_data *file, struct nlist_64 *sym)
@@ -54,7 +54,7 @@ static int8_t	symbol_get_64(t_file_data *file, struct nlist_64 *sym)
 	return (ret ? ERROR : SUCCESS);
 }
 
-static int8_t		symbols_get_64(t_file_data *file)
+static int8_t	symbols_get_64(t_file_data *file)
 {
 	struct symtab_command	*sym_cmd;
 	struct nlist_64			*sym_tab;
@@ -87,8 +87,8 @@ static int8_t	load_commands_parse_64(t_file_data *file, uint32_t ncmds)
 	uint32_t			i;
 	int32_t				offset;
 	struct load_command	*lc;
-	uint32_t			cmd;	
-	
+	uint32_t			cmd;
+
 	i = 0;
 	offset = file->off_header + sizeof(struct mach_header_64);
 	while (i < ncmds)

@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/18 11:58:47 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/21 16:35:59 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 11:47:07 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,4 @@ uint32_t	*static_magics(void)
 	};
 
 	return (magics_tab);
-}	
+}

@@ -6,7 +6,7 @@
 /*   By: rkirszba <rkirszba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 17:24:12 by rkirszba          #+#    #+#             */
-/*   Updated: 2021/01/26 19:22:26 by rkirszba         ###   ########.fr       */
+/*   Updated: 2021/01/27 12:24:50 by rkirszba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 /*
 ** Basics
-*/	
+*/
 
 # define ERROR				1
 # define SUCCESS			0
@@ -64,7 +64,6 @@
 # define NB_MAGICS			8
 # define NB_HANDLERS		4
 
-
 typedef enum	e_bits
 {
 	bits32,
@@ -73,8 +72,8 @@ typedef enum	e_bits
 
 typedef enum	e_endian
 {
-	little	= 0,
-	big		= 1 
+	little = 0,
+	big = 1
 }				t_endian;
 
 typedef enum	e_section
@@ -103,7 +102,7 @@ typedef struct	s_options
 	uint8_t	p;
 	uint8_t	r;
 	uint8_t	u;
-	uint8_t	U;
+	uint8_t	uu;
 }				t_options;
 
 typedef struct	s_file_data
@@ -143,6 +142,7 @@ typedef struct	s_error
 	char		*message;
 }				t_error;
 
+typedef int		(t_cmp_fun)(void*, void*);
 
 /*
 ** Main
@@ -187,19 +187,19 @@ int8_t			handle_fat_64(t_file_data *file);
 int8_t			segment_parse_32(t_file_data *file, int32_t offset);
 int8_t			segment_parse_64(t_file_data *file, int32_t offset);
 
-
 /*
 ** Symbols common util functions
 */
 
-void			symbol_get_section(t_file_data *file, t_symbol_data *symbol, uint8_t sect_nb);
+void			symbol_get_section(t_file_data *file, t_symbol_data *symbol,
+				uint8_t sect_nb);
 int8_t			symbol_to_tree(t_btree **head, t_symbol_data *symbol);
 
 /*
 ** Symbols sorting functions
 */
 
-int				(*symbol_get_sort_fun(void))(void*, void*);
+t_cmp_fun		*symbol_get_sort_fun(void);
 int				symbol_num_sort(void *curs_data, void *node_data);
 int				symbol_alpha_sort(void *curs_data, void *node_data);
 int				symbol_no_sort(void *curs_data, void *node_data);
@@ -213,13 +213,15 @@ void			print_value(t_symbol_data *symbol, t_bits arch);
 void			print_hex(uint64_t nb, uint32_t width);
 void			print_type(t_symbol_data *symbol);
 void			print_indirect(t_symbol_data *symbol);
+void			print_name(t_file_data *file);
 
 /*
 ** Security checks
 */
 
-int8_t			is_inside_file_rel(int32_t size, uint32_t offset, uint32_t to_read);
-int8_t			is_inside_file_abs(void* addr1, int32_t size, void* addr2);
+int8_t			is_inside_file_rel(int32_t size, uint32_t offset,
+				uint32_t to_read);
+int8_t			is_inside_file_abs(void *addr1, int32_t size, void *addr2);
 int8_t			is_secure_str(void *addr, int32_t size, char *str);
 uint32_t		distance_to_eof(void *addr1, int32_t size, void *addr2);
 
